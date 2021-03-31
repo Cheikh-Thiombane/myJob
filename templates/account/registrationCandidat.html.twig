@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Création d'une annonce{% endblock %}
+
+{% block body %}
+
+
+   				<!-- Content
+		============================================= -->
+		<section id="content">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="accordion accordion-lg mx-auto mb-0 clearfix" style="max-width: 1000px;">
+
+						<div class="accordion-header">
+							<div class="accordion-icon">
+								<i class="accordion-closed icon-user4"></i>
+								<i class="accordion-open icon-ok-sign"></i>
+							</div>
+							<div class="accordion-title">
+								Nouveau compte? Inscription Express
+							</div>
+						</div>
+						<div class="accordion-content clearfix">
+							{{ form_start(form,{'attr' :{'class' : 'row mb-0'}}) }}
+								<div class="col-3 form-group">
+									{{ form_row(form.civilite ,{ 'label': 'Civilité' }) }}
+								</div>
+								<div class="col-5 form-group">
+									{{ form_row(form.firstName ,{ 'label': 'Prénom' }) }}
+								</div>
+
+								<div class="col-4 form-group">
+									{{ form_row(form.lastName ,{ 'label': 'Nom' }) }}
+								</div>
+								<div class="col-6 form-group">
+									{{ form_row(form.email ,{ 'label': 'Email' }) }}
+								</div>
+
+								<div class="col-6 form-group">
+									{{ form_row(form.numTel ,{ 'label': 'Tel' }) }}
+								</div>
+								<div class="col-6 form-group">
+									{{ form_row(form.hash ,{ 'label': 'Choisir un mot de passe' }) }}
+								</div>
+
+								<div class="col-6 form-group">
+									{{ form_row(form.passwordConfirm ,{ 'label': 'Confirmation de mot de passe' }) }}
+								</div>
+
+								<div class="col-12 form-group">
+									<button class="button button-3d button-black m-0" id="register-form-submit" name="register-form-submit" value="register">Je m'inscrit</button>
+								</div>
+							{{ form_end(form) }}
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</section><!-- #content end -->
+<!-- <pre>
+  {# dump(form) #}
+</pre> -->
+  </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

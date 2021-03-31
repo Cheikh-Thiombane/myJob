@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+
+    		<!-- Content
+		============================================= -->
+		<section id="content">
+			<div class="content-wrap py-0">
+
+				<div class="section dark p-0 m-0 h-100 position-absolute"></div>
+
+				<div class="section bg-transparent min-vh-100 p-0 m-0 d-flex">
+					<div class="vertical-middle">
+						<div class="container py-5">
+
+							<div class="text-center">
+								<a href="index.html"><h2 class="text-center">Connexion</h2></a>
+							</div>
+
+                {% if hasError %}
+                   <div class="alert alert-danger">
+                       Le nom d'utilisateur ou le mot de passe est invalide
+                   </div>
+               {% endif %}
+							<div class="card mx-auto rounded-0 border-0" style="max-width: 400px;">
+								<div class="card-body" style="padding: 40px;">
+									<form id="login-form" name="login-form" class="mb-0" action="{{ path('account_login') }}" method="post">
+
+										<h3>Connectez Vous</h3>
+
+										<div class="row">
+											<div class="col-12 form-group">
+												<label for="login-form-username">Email:</label>
+												<input type="text" id="login-form-username" name="_username" value="{{username}}" class="form-control not-dark" />
+											</div>
+
+											<div class="col-12 form-group">
+												<label for="login-form-password">Mot de passe:</label>
+												<input type="password" id="login-form-password" name="_password" required  class="form-control not-dark" />
+											</div>
+
+											<div class="col-12 form-group mb-0">
+												<button class="button button-3d button-black m-0" id="login-form-submit" name="" value="login">Connexion</button>
+												<a href="#" class="float-right">Mot de passe oublié?</a>
+											</div>
+										</div>
+									</form>
+
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section><!-- #content end -->
+
+
+{% endblock %}

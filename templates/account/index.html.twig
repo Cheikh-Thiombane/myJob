@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+    <section id="main-content" class="add ">
+        <div class="container">
+        <h1 class="text-center title-center">choisissez votre Inscription</h1>
+       <!--  <div class="divider divider-rounded divider-center"><i class="icon-map-marker"></i></div> -->
+
+        <h2 class="h2 title-block">Inscription Rapide !!</h2>
+
+        <div class="content">
+            <div class="row ">
+
+                <div class="col-5 tp-shadow1 img-hover-wrap bg-color man-vh-50 mb-5 fadeInLeft animated" data-animated='fadeInLeft'>
+                    <div class="img-hover-card">
+                            <div class="h3 text-uppercase py-5 px-5">Vous êtes Candidat</div>
+                            <a href="{{ path('account_register_candidat') }}" class="button button-xlarge button-border button-circle text-right mt-6 button-fill button-black fill-from-bottom">Cliquez ICI<i class="icon-circle-arrow-right"></i></a>
+
+                    </div>
+                </div>
+                <div class="col-2 "></div>
+                <div class="col-5 tp-shadow1 bg-light min-vh-50 mb-5 fadeInRight animated" data-animated='fadeInRight'>
+                        <div class="h3 text-uppercase py-5 px-5">Vous êtes recruteur</div>
+                        <a href="{{ path('account_register_entreprise') }}" class="button button-xlarge button-border button-circle text-right mt-6 button-fill button-black fill-from-bottom">Cliquez ICI<i class="icon-circle-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </section>
+
+{% endblock %}

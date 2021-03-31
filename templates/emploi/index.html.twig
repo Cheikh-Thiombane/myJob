@@ -1,0 +1,159 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}Hello EntrepriseController!{% endblock %}
+{% block stylesheets %}
+    	<style>
+
+		.demos-filter {
+			margin: 0;
+			text-align: left;
+            font-size: 12px;
+		}
+
+		.demos-filter li {
+			list-style: none;
+			margin: 10px 0px;
+		}
+
+		.demos-filter li a {
+			display: block;
+			border: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #444;
+		}
+
+		.demos-filter li a:hover,
+		.demos-filter li.activeFilter a { color: #1ABC9C; }
+
+		@media (max-width: 991px) {
+			.demos-filter { text-align: center; }
+
+			.demos-filter li {
+				float: left;
+				width: 33.3%;
+				padding: 0 20px;
+			}
+		}
+
+		@media (max-width: 767px) { .demos-filter li { width: 50%; } }
+
+		.tiny_bullet_slider .tp-bullet:before{content:" ";  position:absolute;  width:100%;  height:25px;  top:-12px;  left:0px;  background:transparent}#rev_slider_103_1 .uranus.tparrows{width:50px; height:50px; background:rgba(255,255,255,0)}#rev_slider_103_1 .uranus.tparrows:before{width:50px; height:50px; line-height:50px; font-size:40px; transition:all 0.3s;-webkit-transition:all 0.3s}#rev_slider_103_1 .uranus.tparrows:hover:before{opacity:0.75}.bullet-bar.tp-bullets{}.bullet-bar.tp-bullets:before{content:" ";position:absolute;width:100%;height:100%;background:transparent;padding:10px;margin-left:-10px;margin-top:-10px;box-sizing:content-box}.bullet-bar .tp-bullet{width:60px;height:3px;position:absolute;background:#aaa;  background:rgba(204,204,204,0.5);cursor:pointer;box-sizing:content-box}.bullet-bar .tp-bullet:hover,.bullet-bar .tp-bullet.selected{background:rgba(204,204,204,1)}.bullet-bar .tp-bullet-image{}.bullet-bar .tp-bullet-title{}
+
+	</style>
+{% endblock %}
+{% block body %}
+
+
+		<section id="content">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="heading-block center border-bottom-0 bottommargin-lg">
+						<h2>{{offre_emplois | length}}+ Offres d'emploi diponnible ICI</h2>
+					</div>
+
+					<div class="row gutter-40 col-mb-80">
+						<div class="sidebar col-lg-4">
+							<div class="toggle">
+								<div class="toggle-header">
+									<div class="toggle-icon">
+										<i class="toggle-closed icon-line-plus"></i>
+										<i class="toggle-open icon-line-minus"></i>
+									</div>
+									<div class="toggle-title">
+										Secteur activités
+									</div>
+								</div>
+								<div class="toggle-content" style="display: block;">
+
+										<ul class="demos-filter custom-filter" data-container="#portfolio">
+												{% for secteur in secteur_activites %}
+														<li class=""><a href="#" data-filter="*">{{secteur}}</a></li>
+												{% endfor %}
+										</ul><!-- .grid-filter end -->
+								</div>
+							</div>
+                        <div class="toggle">
+								<div class="toggle-header">
+									<div class="toggle-icon">
+										<i class="toggle-closed icon-line-plus"></i>
+										<i class="toggle-open icon-line-minus"></i>
+									</div>
+									<div class="toggle-title">
+										metiers
+									</div>
+								</div>
+								<div class="toggle-content" style="display: none;">
+										<ul class="demos-filter custom-filter" data-container="#portfolio">
+												{% for metier in metiers %}
+														<li class=""><a href="#" data-filter="*">{{metier}}</a></li>
+												{% endfor %}
+
+										</ul><!-- .grid-filter end -->
+								</div>
+							</div>
+                        <div class="toggle">
+								<div class="toggle-header">
+									<div class="toggle-icon">
+										<i class="toggle-closed icon-line-plus"></i>
+										<i class="toggle-open icon-line-minus"></i>
+									</div>
+									<div class="toggle-title">
+										Régions
+									</div>
+								</div>
+								<div class="toggle-content" style="display: none;">
+										<ul class="demos-filter custom-filter" data-container="#portfolio">
+												{% for region in regions %}
+														<li class=""><a href="#" data-filter="*">{{region}}</a></li>
+												{% endfor %}
+										</ul><!-- .grid-filter end -->
+								</div>
+							</div>
+							<!-- Demos Filter
+							============================================= -->
+
+
+						</div>
+
+						<div class="postcontent col-lg-8">
+							<!-- Portfolio Items
+							============================================= -->
+							<div id="portfolio" class="portfolio row grid-container gutter-20 has-init-isotope" data-layout="fitRows" data-stagger="20" style="position: relative; height: auto;">
+									{% for offre in offre_emplois  %}
+                                        {% set url = path('emploi_show', {'slug' : offre.slug} ) %}
+                                        {% set url_e = path('entreprise_show', {'slug' : offre.entreprise.slug} ) %}
+                                        <div class="col-md-12">
+                                            <div class="fslider testimonial" data-animation="fade" data-arrows="false">
+                                                <div class="flexslider" style="height: 107px;">
+                                                    <div class="slider-wrap">
+                                                        <div class="slide" data-thumb-alt="" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;">
+                                                            <div class="testi-image">
+                                                                <a href="{{url}}"><img src=" {{offre.entreprise.picture}} " class=""  style="max-height: 100%;" alt=""></i></a>
+                                                            </div>
+                                                            <div class="testi-content">
+                                                                <div class="testi-meta">
+                                                                    <a href="{{url}}">{{offre.poste}}</a>
+                                                                    <a href="{{url_e}}"><span>{{offre.entreprise.nom}}</span></a>
+                                                                </div>
+                                                                {{offre.descriptionPoste}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    {% endfor %}
+
+							</div><!-- #portfolio end -->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+{% endblock %}

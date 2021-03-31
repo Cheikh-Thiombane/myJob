@@ -1,0 +1,364 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+        <section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header">
+			<div class="slider-inner">
+
+				<div class="swiper-container swiper-parent">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide dark">
+							<div class="container">
+								<div class="slider-caption slider-caption-center">
+									<h2 data-animate="fadeInUp">Bienvenue sur MyJob</h2>
+									<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">
+                                        MyJob simplifie vos actions de recrutement et votre recherche d'emploi.
+                                    </p>
+
+                                </div>
+							</div>
+							<div class="swiper-slide-bg" style="background-image: url('/images/slider/swiper/1.jpg');"></div>
+						</div>
+						<div class="swiper-slide dark">
+							<div class="container">
+								<div class="slider-caption slider-caption-center">
+									<h2 data-animate="fadeInUp">Employeurs, recrutez à <span>votre rythme</span>  et selon <span class="primary">vos exigences</span> </h2>
+									<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">
+                                        Nous travaillons quotidiennement à faciliter le travail des recruteurs,
+                                        qui cherchent à promouvoir leurs annonces d'emploi et à trouver le bon
+                                        candidat pour leurs postes.
+                                    </p>
+                                    <div data-animate="fadeInUp">
+                                        <a href="#" class="button button-reveal button-large button-circle text-right m-0"><i class="icon-angle-right"></i><span>CANDIDAT: DEPOSER VOTRE CV ICI</span></a>
+                                    </div>
+								</div>
+							</div>
+							<div class="video-wrap">
+								<video poster="images/videos/explore-poster.jpg" preload="auto" loop autoplay muted>
+									<source src='images/videos/explore.mp4' type='video/mp4' />
+									<source src='images/videos/explore.webm' type='video/webm' />
+								</video>
+								<div class="video-overlay" style="background-color: rgba(0,0,0,0.55);"></div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="container clearfix">
+								<div class="slider-caption slider-caption-center">
+									<h2 data-animate="fadeInUp">Votre <span class="primary">partenaire Job</span>  au quotidien</h2>
+									<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">
+                                        Nous travaillons quotidiennement pour mettre à la disposition des demandeurs au Sénégal,
+                                        de la Diaspora et de la sous-région francophone, des opportunités et des services efficaces pour les rapprocher
+                                        des recruteurs.
+                                    </p>
+                                    <div data-animate="fadeInUp">
+                                        <a href="#" class="button button-reveal button-large button-circle text-right m-0"><i class="icon-angle-right"></i><span>CANDIDAT: DEPOSER VOTRE CV ICI</span></a>
+                                    </div>
+								</div>
+
+							</div>
+							<div class="swiper-slide-bg" style="background-image: url('images/slider/swiper/3.jpg'); background-position: center top;"></div>
+						</div>
+					</div>
+					<div class="slider-arrow-left"><i class="icon-angle-left"></i></div>
+					<div class="slider-arrow-right"><i class="icon-angle-right"></i></div>
+					<div class="slide-number"><div class="slide-number-current"></div><span>/</span><div class="slide-number-total"></div></div>
+				</div>
+
+			</div>
+		</section>
+        <section id="content">
+            <div class="section parallax dark mb-0 border-bottom-0 skrollable skrollable-between" style="background-image: url(&quot;images/parallax/home/1.jpg&quot;); background-position: 0px -68.5204px;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+
+                <div class="container clearfix">
+
+                    <div class="heading-block center">
+                        <h2 class="mb-5">Trouvez votre futur job parmi +{{offres | length}} postes ouverts</h2>
+                        <div class="row mt-2">
+                        <div class="col-md-4  " >
+                            <input type="text" name="event-registration-first-name" id="event-registration-first-name"class=" form-control form-text   "
+                            style="border-radius: 23px; font-size: 1rem; height: fit-content; padding : 10px 26px; background: white; opacity : 0.5" value="" placeholder="Mots Clés">
+                        </div>
+                        <div class="col-md-2 circle">
+
+										{# <div class="dropdown bootstrap-select show-tick">
+                                            <select class="selectpicker" multiple="" data-live-search="true" tabindex="null">
+											{% for region in regions %}
+                                                <option value="{{region}}">{{region}}</option>
+                                            {% endfor %}
+										    </select>
+                                            <button type="button" tabindex="-1" class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-3" aria-haspopup="listbox" aria-expanded="false" title="Nothing selected">
+                                                <div class="filter-option">
+                                                    <div class="filter-option-inner">
+                                                        <div class="filter-option-inner-inner">Nothing selected</div>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div class="dropdown-menu" style="max-height: 262px; overflow: hidden; min-height: 46px;">
+                                                <div class="bs-searchbox">
+                                                    <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-3" aria-autocomplete="list" aria-activedescendant="bs-select-3-1">
+                                                </div>
+                                                <div class="inner show" role="listbox" id="bs-select-3" tabindex="-1" aria-multiselectable="true" style="max-height: 198px; overflow-y: auto; min-height: 0px;">
+                                                    <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+                                                        {% for region in regions %}
+                                                        {% set var = loop.index0 %}
+                                                        <li class="">
+                                                            <a role="option" class="dropdown-item" id="bs-select-3-{{var}}" tabindex="0" aria-selected="false" aria-setsize="3" aria-posinset="{{loop.index0}}">
+                                                                <span class=" bs-ok-default check-mark"></span><span class="text">{{region}}</span>
+                                                            </a>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div> #}
+                            <select class="form-control form-text"
+                            style="border-radius: 23px; font-size: large; height: fit-content; padding : 10px 26px;background: white; opacity : 0.5" aria-label="Default select example">
+                                <option >Regions</option>
+                                {% for region in regions %}
+                                    <option value="{{region}}">{{region}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control form-text"
+                            style="border-radius: 23px; font-size: large; height: fit-content; outline: none;font-weight: 700; padding : 10px 26px;background: white; opacity : 0.5 " aria-label="Default select example">
+                                <option selected>Métiers</option>
+                                {% for metier in metiers %}
+                                    <option value="{{metier}}">{{metier}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <a href="#" class="button button-reveal button-large button-circle text-right m-1"><i class="icon-search"></i><span>Recherche</span></a>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div style="position: relative; margin-bottom: -60px; " data-height-xl="415" data-height-lg="342" data-height-md="262" data-height-sm="160" data-height-xs="102">
+                        <div class="row ">
+                            <div class="col-md-4 white pl-3 ml-1">
+                                <h3 class="text-black-50 mb-3 mt-2">Emploi par secteur</h3>
+                                <ul class="mb-1 list-unstyled">
+                                    {% for secteur in secteur_activite|slice(0, 13) %}
+                                        <a href=""><li class="font-weight-bold font-body text-black-50"><strong>{{ secteur }}</strong></li></a>
+                                    {% endfor %}
+                                </ul>
+                            <a href="{{ path('emploi') }}" class="button button-reveal button-small mt-2 button-circle text-right m-0 "><i class="icon-angle-right"></i><span>les secteurs d'activité</span></a>                            </div>
+                            <div class="col-md-4 white pl-3 ml-1">
+                                <h3 class="text-black-50 mb-3 mt-2">Emploi par Métiers</h3>
+                                <ul class="mb-1 list-unstyled">
+                                    {% for metier in metiers|slice(0, 13) %}
+                                        <a href=""><li class="font-weight-bold font-body  text-black-50"><strong>{{ metier }}</strong></li></a>
+                                    {% endfor %}
+                                </ul>
+                                <a href="{{ path('emploi') }}" class="button button-reveal button-small mt-2 button-circle text-right m-0"><i class="icon-angle-right"></i><span>tous les métiers</span></a>                            </div>
+                            <div class="col-md-4 white pl-3 ml-1">
+                                <h3 class="text-black-50 mb-3 mt-2">Emploi par Régions</h3>
+                                <ul class="mb-1 list-unstyled">
+                                    {% for region in regions|slice(0, 13) %}
+                                        <a href=""><li class="font-weight-bold font-body  text-black-50"><strong>{{ region }}</strong></li></a>
+                                    {% endfor %}
+                                </ul>
+                                <a href="{{ path('emploi') }}" class="button button-reveal button-small mt-2 button-circle text-right m-0"><i class="icon-angle-right"></i><span>toutes les région</span></a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <a href="{{ path('account_home') }}" class="button button-full button-dark center text-right bottommargin-lg">
+                <div class="container clearfix">
+                    Vous n'avez pas encore de compte !! <strong>Inscrivez vous ICI</strong> <i class="icon-caret-right" style="top:4px;"></i>
+                </div>
+            </a>
+            <div class="row align-items-stretch">
+                <div class="col-lg-3 col-md-6 center col-padding" style="background-color: #E2E2E2;">
+                    <div>
+                        <i class="i-plain i-xlarge mx-auto bottommargin-sm icon-et-pictures"></i>
+                        <div class="counter"><span data-from="1" data-to="{{offres | length}}" data-refresh-interval="50" data-speed="2000">{{offres | length}}</span>+</div>
+                        <h5>Nombre d'offres disponible</h5>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 center col-padding" style="background-color: #E9E9E9;">
+                    <div>
+                        <i class="i-plain i-xlarge mx-auto bottommargin-sm icon-et-pencil"></i>
+                        <div class="counter"><span data-from="0" data-to="{{entreprises | length}}" data-refresh-interval="50" data-speed="2500">{{entreprises | length}}</span>+</div>
+                        <h5>Entreprises Inscrits</h5>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 center col-padding" style="background-color: #EEE;">
+                    <div>
+                        <i class="i-plain i-xlarge mx-auto bottommargin-sm icon-et-puzzle"></i>
+                        <div class="counter"><span data-from="0" data-to="{{candidats | length}}" data-refresh-interval="25" data-speed="3000">{{candidats | length}}</span>+</div>
+                        <h5>Candidats Inscrits</h5>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 center col-padding" style="background-color: #F2F2F2;">
+                    <div>
+                        <i class="i-plain i-xlarge mx-auto bottommargin-sm icon-et-document"></i>
+                        <div class="counter"><span data-from="10" data-to="{{users | length}}" data-refresh-interval="30" data-speed="2700">{{users | length}}</span>+</div>
+                        <h5>Utilisateurs</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="fancy-title title-center title-border topmargin">
+                <h3>Nos entreprises populaires</h3>
+            </div>
+            <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget owl-loaded owl-drag" data-pagi="false" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2260px;">
+                        {% for entreprise in entreprises | slice(0,5) %}
+                          {% set url = path('entreprise_show', {'slug' : entreprise.slug} ) %}
+                            <div class="owl-item active" style="width: 262.5px; margin-right: 20px;">
+                                <div class="portfolio-item">
+                                    <div class="portfolio-image">
+                                        <a href="portfolio-single.html">
+                                            <img src=" {{entreprise.picture}} " alt="Open Imagination">
+                                        </a>
+                                        <div class="bg-overlay">
+                                            <div class="bg-overlay-content dark animated fadeOut" data-hover-animate="fadeIn" data-hover-speed="350" style="animation-duration: 350ms;">
+                                                <a href="/images/portfolio/full/1.jpg" class="overlay-trigger-icon bg-light text-dark animated fadeInUpSmall" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image" style="animation-duration: 350ms;"><i class="icon-line-plus"></i></a>
+                                                <a href="{{ url }}" class="overlay-trigger-icon bg-light text-dark animated fadeInUpSmall" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" style="animation-duration: 350ms;"><i class="icon-line-ellipsis"></i></a>
+                                            </div>
+                                            <div class="bg-overlay-bg dark animated fadeOut" data-hover-animate="fadeIn" data-hover-speed="350" style="animation-duration: 350ms;"></div>
+                                        </div>
+                                    </div>
+
+                                        <div class="portfolio-desc">
+                                            <h3><a href="{{ url }}">{{entreprise.nom}}</a></h3>
+                                            <span><a href=""> {{ entreprise.user.ville }} </a>, <a href="">{{ entreprise.user.pays }} </a></span>
+                                        </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="owl-nav"><button type="button" role="presentation" class="owl-prev disabled"><i class="icon-angle-left"></i></button><button type="button" role="presentation" class="owl-next"><i class="icon-angle-right"></i></button></div><div class="owl-dots disabled"></div>
+            </div>
+            <div class="fancy-title title-center title-border topmargin">
+                <h3>Nos offres recents</h3>
+            </div>
+            <div id="section-articles" class="section page-section m-0 bg-color clearfix" style="padding: 100px 0" data-onepage-settings="{&quot;offset&quot;:0,&quot;speed&quot;:&quot;1250&quot;,&quot;easing&quot;:&quot;easeInOutExpo&quot;}">
+				<div class="container clearfix">
+					<div class="row col-mb-50 mb-0">
+                        {% for offre in offres | slice (0 , 12) %}
+                        {% set url = path('emploi_show', {'slug' : offre.slug} ) %}
+                        {% set url_e = path('entreprise_show', {'slug' : offre.entreprise.slug} ) %}
+						<div class="col-md-12">
+							<div class="fslider testimonial" data-animation="fade" data-arrows="false">
+								<div class="flexslider" style="height: 107px;">
+									<div class="slider-wrap">
+										<div class="slide" data-thumb-alt="" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;">
+											<div class="testi-image">
+												<a href="{{url}}"><img src=" {{offre.entreprise.picture}} " class=""  style="max-height: 100%;" alt=""></i></a>
+											</div>
+											<div class="testi-content">
+												<div class="testi-meta">
+													<a href="{{url}}">{{offre.poste}}</a>
+													<a href="{{url_e}}"><span>{{offre.entreprise.nom}}</span></a>
+												</div>
+                                                {{offre.descriptionPoste}}
+											</div>
+										</div>
+									</div>
+                                </div>
+							</div>
+						</div>
+
+
+                        {% endfor %}
+
+					</div>
+				</div>
+            </div>
+            <div id="section-about" class="section page-section m-0" style="background: #EEE  no-repeat center center; background-size: cover; padding: 100px 0" data-onepage-settings="{&quot;offset&quot;:0,&quot;speed&quot;:&quot;1250&quot;,&quot;easing&quot;:&quot;easeInOutExpo&quot;}">
+					<div class="container pl-lg-5">
+						<div class="row ">
+                        {% for candidat in candidats | slice(0, 6)%}
+
+							<div class="col-md-5 mt-lg-5 border border-left  ml-5  clearfix">
+								<div class="heading-block">
+									<h2 class="font-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CV Num : {{candidat.id}} </font></font></h2>
+									<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </font><font style="vertical-align: inherit;">Praesentium reprehenderit inventore beatae velit quae labore sunt in possimus. </font><font style="vertical-align: inherit;">Mollitia, culpa?</font></font></span>
+								</div>
+								<table class="table">
+									<tbody>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Civilité:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.civilite}}</font></font></td>
+										</tr>
+										<tr>
+											<td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nom:</font></font></strong></td>
+											<td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.lastname}}</font></font></td>
+										</tr>
+										<tr>
+											<td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Prénom:</font></font></strong></td>
+											<td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.firstname}}</font></font></td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Date de naissance:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.dateNaiss | format_date}}</font></font></td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">E-mail:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.email}}</font></font></td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Téléphoner:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.numTel}}</font></font></td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Secteurs d'activité:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                {% if candidat.critere is null %}
+                                                        ....
+                                                {% else %}
+                                                {{candidat.critere.secteurActivite}}
+                                                {% endif %} </font></font>
+                                            </td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Langues:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                {% if candidat.critere is null %}
+                                                        ....
+                                                {% else %}
+                                                {{candidat.critere.langues}}
+                                                {% endif %} </font></font>
+                                            </td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nationalité:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">australien</font></font></td>
+										</tr>
+									</tbody>
+								</table>
+								<a href="{{ path('candidat') }}" class="button button-large button-border button-black button-dark ml-0"><i class="icon-line-cloud-download"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Voir le CV</font></font></a>
+							</div>
+                        {% endfor %}
+						</div>
+					</div>
+					<div class="video-wrap">
+						<div class="video-overlay d-sm-block d-md-none" style="background: rgba(255,255,255,0.9);"></div>
+					</div>
+				</div>
+        </section>
+
+{% endblock %}
+{% block javascripts %}
+<script>
+
+		$('.selectsplitter').selectsplitter();
+
+	</script>
+{% endblock %}

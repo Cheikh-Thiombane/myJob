@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+{% block stylesheets %}
+    	<style>
+
+		.demos-filter {
+			margin: 0;
+			text-align: right;
+		}
+
+		.demos-filter li {
+			list-style: none;
+			margin: 10px 0px;
+		}
+
+		.demos-filter li a {
+			display: block;
+			border: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #444;
+		}
+
+		.demos-filter li a:hover,
+		.demos-filter li.activeFilter a { color: #1ABC9C; }
+
+		@media (max-width: 991px) {
+			.demos-filter { text-align: center; }
+
+			.demos-filter li {
+				float: left;
+				width: 33.3%;
+				padding: 0 20px;
+			}
+		}
+
+		@media (max-width: 767px) { .demos-filter li { width: 50%; } }
+
+		.tiny_bullet_slider .tp-bullet:before{content:" ";  position:absolute;  width:100%;  height:25px;  top:-12px;  left:0px;  background:transparent}#rev_slider_103_1 .uranus.tparrows{width:50px; height:50px; background:rgba(255,255,255,0)}#rev_slider_103_1 .uranus.tparrows:before{width:50px; height:50px; line-height:50px; font-size:40px; transition:all 0.3s;-webkit-transition:all 0.3s}#rev_slider_103_1 .uranus.tparrows:hover:before{opacity:0.75}.bullet-bar.tp-bullets{}.bullet-bar.tp-bullets:before{content:" ";position:absolute;width:100%;height:100%;background:transparent;padding:10px;margin-left:-10px;margin-top:-10px;box-sizing:content-box}.bullet-bar .tp-bullet{width:60px;height:3px;position:absolute;background:#aaa;  background:rgba(204,204,204,0.5);cursor:pointer;box-sizing:content-box}.bullet-bar .tp-bullet:hover,.bullet-bar .tp-bullet.selected{background:rgba(204,204,204,1)}.bullet-bar .tp-bullet-image{}.bullet-bar .tp-bullet-title{}
+
+	</style>
+{% endblock %}
+{% block body %}
+
+
+		<section id="content">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="heading-block center border-bottom-0 bottommargin-lg">
+						<h2>140+ Premium Hero Templates.</h2>
+						<p class="center lead" style="margin-top:5px;">Built by ThemePunch using the <a href="https://codecanyon.net/item/slider-revolution-responsive-jquery-plugin/2580848?ref=SemiColonWeb" target="_blank">Slider Revolution</a> Plugin integrated into Canvas.</p>
+					</div>
+
+					<div class="row gutter-40 col-mb-80">
+						<div class="sidebar col-lg-3">
+
+							<!-- Demos Filter
+							============================================= -->
+							<ul class="demos-filter custom-filter" data-container="#portfolio">
+								{% for secteur in secteur_activite %}
+									<li class=""><a href="#" data-filter="*">{{secteur}}</a></li>
+								{% endfor %}
+
+							</ul><!-- .grid-filter end -->
+
+						</div>
+
+						<div class="postcontent col-lg-9">
+							<!-- Portfolio Items
+							============================================= -->
+							<div id="portfolio" class="portfolio row grid-container gutter-20 has-init-isotope" data-layout="fitRows" data-stagger="20" style="position: relative; height: auto;">
+								{% for entreprise in entreprises %}
+								{% set url = path('entreprise_show', {'slug' : entreprise.slug} ) %}
+								<div class="col-lg-3 col-md-6">
+													<div class="entry">
+															<div class="entry-image">
+																	<a href="{{url}}"><img src="{{entreprise.picture}}" alt="Image"></a>
+															</div>
+															<div class="entry-title title-xs nott">
+																	<h3><a href="{{url}}">{{entreprise.nom}}</a></h3>
+															</div>
+															<div class="entry-meta">
+																	<ul>
+																			<li><a href="{{entreprise.site}}"><i class="icon-globe1"></i> {{entreprise.site}} </a></li>
+																			<li><a href="{{url}}"><i class="icon-comments"></i> 53</a></li>
+																	</ul>
+															</div>
+
+													</div>
+											</div>
+								{% endfor %}
+							</div><!-- #portfolio end -->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+{% endblock %}

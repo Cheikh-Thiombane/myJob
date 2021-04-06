@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CritereRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,42 +19,11 @@ class Critere
      */
     private $id;
 
-
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $metier = [];
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $mobilite = [];
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $secteurActivite = [];
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $typeContrat;
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $renumeration;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $langues = [];
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $disponibilite;
 
     /**
      * @ORM\OneToOne(targetEntity=Candidat::class, inversedBy="critere", cascade={"persist", "remove"})
@@ -60,7 +31,47 @@ class Critere
      */
     private $candidat;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=SecteurActivite::class, inversedBy="criteres")
+     */
+    private $secteurActivites;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Metier::class, inversedBy="criteres")
+     */
+    private $metier;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Langue::class, inversedBy="criteres")
+     */
+    private $langues;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Region::class, inversedBy="criteres")
+     */
+    private $mobilites;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $disponiblilite;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TypeContrat::class, inversedBy="critere")
+     */
+    private $typeContrats;
+
     
+
+    public function __construct()
+    {
+        $this->secteurActivites = new ArrayCollection();
+        $this->langues = new ArrayCollection();
+        $this->mobilites = new ArrayCollection();
+        $this->typeContrats = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -69,53 +80,6 @@ class Critere
 
 
 
-    public function getMetier(): ?array
-    {
-        return $this->metier;
-    }
-
-    public function setMetier(?array $metier): self
-    {
-        $this->metier = $metier;
-
-        return $this;
-    }
-
-    public function getMobilite(): ?array
-    {
-        return $this->mobilite;
-    }
-
-    public function setMobilite(?array $mobilite): self
-    {
-        $this->mobilite = $mobilite;
-
-        return $this;
-    }
-
-    public function getSecteurActivite(): ?array
-    {
-        return $this->secteurActivite;
-    }
-
-    public function setSecteurActivite(?array $secteurActivite): self
-    {
-        $this->secteurActivite = $secteurActivite;
-
-        return $this;
-    }
-
-    public function getTypeContrat(): ?string
-    {
-        return $this->typeContrat;
-    }
-
-    public function setTypeContrat(?string $typeContrat): self
-    {
-        $this->typeContrat = $typeContrat;
-
-        return $this;
-    }
 
     public function getRenumeration(): ?int
     {
@@ -129,29 +93,7 @@ class Critere
         return $this;
     }
 
-    public function getLangues(): ?array
-    {
-        return $this->langues;
-    }
 
-    public function setLangues(?array $langues): self
-    {
-        $this->langues = $langues;
-
-        return $this;
-    }
-
-    public function getDisponibilite(): ?int
-    {
-        return $this->disponibilite;
-    }
-
-    public function setDisponibilite(int $disponibilite): self
-    {
-        $this->disponibilite = $disponibilite;
-
-        return $this;
-    }
 
     public function getCandidat(): ?Candidat
     {
@@ -165,5 +107,136 @@ class Critere
         return $this;
     }
 
+    /**
+     * @return Collection|SecteurActivite[]
+     */
+    public function getSecteurActivites(): Collection
+    {
+        return $this->secteurActivites;
+    }
+
+    public function addSecteurActivite(SecteurActivite $secteurActivite): self
+    {
+        if (!$this->secteurActivites->contains($secteurActivite)) {
+            $this->secteurActivites[] = $secteurActivite;
+        }
+
+        return $this;
+    }
+
+    public function removeSecteurActivite(SecteurActivite $secteurActivite): self
+    {
+        $this->secteurActivites->removeElement($secteurActivite);
+
+        return $this;
+    }
+
+    public function getMetier(): ?Metier
+    {
+        return $this->metier;
+    }
+
+    public function setMetier(?Metier $metier): self
+    {
+        $this->metier = $metier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Langue[]
+     */
+    public function getLangues(): Collection
+    {
+        return $this->langues;
+    }
+
+    public function addLangue(Langue $langue): self
+    {
+        if (!$this->langues->contains($langue)) {
+            $this->langues[] = $langue;
+        }
+
+        return $this;
+    }
+
+    public function removeLangue(Langue $langue): self
+    {
+        $this->langues->removeElement($langue);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Region[]
+     */
+    public function getMobilites(): Collection
+    {
+        return $this->mobilites;
+    }
+
+    public function addMobilite(Region $mobilite): self
+    {
+        if (!$this->mobilites->contains($mobilite)) {
+            $this->mobilites[] = $mobilite;
+        }
+
+        return $this;
+    }
+
+    public function removeMobilite(Region $mobilite): self
+    {
+        $this->mobilites->removeElement($mobilite);
+
+        return $this;
+    }
+
+    public function getDisponiblilite(): ?string
+    {
+        return $this->disponiblilite;
+    }
+
+    public function setDisponiblilite(?string $disponiblilite): self
+    {
+        $this->disponiblilite = $disponiblilite;
+
+        return $this;
+    }
+
+    public function getTypeContrat(): ?TypeContrat
+    {
+        return $this->typeContrat;
+    }
+
+    public function setTypeContrat(?TypeContrat $typeContrat): self
+    {
+        $this->typeContrat = $typeContrat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TypeContrat[]
+     */
+    public function getTypeContrats(): Collection
+    {
+        return $this->typeContrats;
+    }
+
+    public function addTypeContrat(TypeContrat $typeContrat): self
+    {
+        if (!$this->typeContrats->contains($typeContrat)) {
+            $this->typeContrats[] = $typeContrat;
+        }
+
+        return $this;
+    }
+
+    public function removeTypeContrat(TypeContrat $typeContrat): self
+    {
+        $this->typeContrats->removeElement($typeContrat);
+
+        return $this;
+    }
 
 }

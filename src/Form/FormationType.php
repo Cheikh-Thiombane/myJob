@@ -16,17 +16,10 @@ class FormationType extends ApplicationType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateDebut',DateType::class,[
-                'placeholder' => [
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                ]])
+            ->add('dateDebut',TextType::class, $this->getConfiguration("Date Debut"))
             ->add('titre', TextType::class, $this->getConfiguration("Titre de la formation"))
             ->add('nomEcole',TextType::class, $this->getConfiguration("Titre de la formation"))
-            ->add('dateFin',DateType::class,[
-                
-                'placeholder' => [
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                ]])
+            ->add('dateFin',TextType::class, $this->getConfiguration("Date Fin"))
             ->add('description',TextareaType::class,$this->getConfiguration("Description"))
         ;
     }

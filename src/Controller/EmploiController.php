@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Entreprise;
 use App\Entity\OffreEmploi;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmploiController extends AbstractController
@@ -155,14 +160,48 @@ class EmploiController extends AbstractController
     #[Route('/emploi/{slug}', name: 'emploi_show')]
     public function show(OffreEmploi $emploi)
     {
+        $entreprise = $emploi->getEntreprise();
 
         // $obb = $repo->findOneBySlug($slug);
 
         return $this->render('emploi/show.html.twig', [
+            'entreprise' => $entreprise,
             'emploi' => $emploi,
             'ville' => '',
             'pays' => '',
-            
+
         ]);
+    }
+    /**
+     * ///
+     * @Security("is_granted('ROLE_USER')")
+     */
+    #[Route('/emploi/add/{slug}', name: 'emploi_add')]
+    public function addEmploi(OffreEmploi $emploi, EntityManagerInterface $manager)
+    {
+        $candidat = $this->getUser()->getCandidat();
+        $candidat->addOffre($emploi);
+        $emploi->addCandidat($candidat);
+        $manager->persist($candidat);
+        $manager->persist($emploi);
+        $manager->flush();
+        //$obb = $repo->findOneBySlug($slug);
+        return $this->redirectToRoute('my_account');
+    }
+    /**
+     * /
+     * @Security("is_granted('ROLE_USER')")
+     */
+    #[Route('/emploi/remove/{id}', name: 'emploi_remove')]
+    public function removeEmploi(OffreEmploi $emploi, EntityManagerInterface $manager)
+    {
+        $candidat = $this->getUser()->getCandidat();
+        $candidat->removeOffre($emploi);
+        $emploi->removeCandidat($candidat);
+        $manager->persist($candidat);
+        $manager->persist($emploi);
+        $manager->flush();
+        //$obb = $repo->findOneBySlug($slug);
+        return $this->redirectToRoute('my_account');
     }
 }

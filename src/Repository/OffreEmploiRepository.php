@@ -35,6 +35,20 @@ class OffreEmploiRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @return OffreEmploi[] Returns an array of OffreEmploi objects
+     */
+
+    public function findByCandidat($value)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.candidats = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?OffreEmploi

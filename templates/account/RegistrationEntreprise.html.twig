@@ -17,7 +17,7 @@
 
 						<div class="accordion-header">
 							<div class="accordion-icon">
-								<i class="accordion-closed icon-user4"></i>
+								<i class="accordion-closed icon-4"></i>
 								<i class="accordion-open icon-ok-sign"></i>
 							</div>
 							<div class="accordion-title">
@@ -37,8 +37,8 @@
 								</div>
 
 								<div class="col-12 form-group">
-									<label for="register-form-username">Choose a Username:</label>
-									<input type="text" id="register-form-username" name="register-form-username" value="" class="form-control" />
+									<label for="register-form-name">Choose a name:</label>
+									<input type="text" id="register-form-name" name="register-form-name" value="" class="form-control" />
 								</div>
 
 								<div class="col-12 form-group">
@@ -68,9 +68,99 @@
 			</div>
 		</section><!-- #content end --> #}
 
-	{{ form_start(form) }}
+		<section id="content">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="accordion accordion-lg mx-auto mb-0 clearfix" style="max-width: 1000px;">
+
+						<div class="accordion-header">
+							<div class="accordion-icon">
+								<i class="accordion-closed icon-4"></i>
+								<i class="accordion-open icon-ok-sign"></i>
+							</div>
+							<div class="accordion-title">
+								Inscription d'une entreprise
+							</div>
+						</div>
+						<div class="accordion-content clearfix">
+
+
+							{{ form_start(form2,{'attr' :{'class' : 'row mb-0'}}) }}
+									<div class="col-6 form-group">
+										{{ form_row(form2.nom ,{ 'label': 'Nom de l\'entreprise' }) }}
+									</div>
+									<div class="col-6 form-group">
+										{{ form_row(form2.site ,{ 'label': 'Site Intenet' }) }}
+									</div>
+									<div class="col-4 form-group">
+										{{ form_row(form2.ville ,{ 'label': 'ville' }) }}
+									</div>
+									<div class="col-4 form-group">
+										{{ form_row(form2.pays ,{ 'label': 'Pays' }) }}
+									</div>
+									<div class="col-4 form-group">
+										{{ form_row(form2.codePostal ,{ 'label': 'Code Postal' }) }}
+									</div>
+								<div class="col-12 form-group">
+										{{ form_row(form2.description ,{ 'label': 'Description de l\'entreprise' }) }}
+								</div>
+								<div class="col-12">
+									{{ form_label(form2.secteurActivite) }}
+								</div>
+								{% for secteur in form2.secteurActivite %}
+                    <div class="col-6 form-group">
+                      {{ form_widget(secteur)  }}
+                      {{ form_label(secteur ) }}
+                    </div>
+                  {% endfor %}
+
+									
+								{{ form_start(form,{'attr' :{'class' : 'row mb-0'}}) }}
+								<div class="row mt-6">
+									<div class="col-3 form-group">
+										{{ form_row(form.civilite ,{ 'label': 'Civilité' }) }}
+									</div>
+									<div class="col-5 form-group">
+										{{ form_row(form.firstName ,{ 'label': 'Prénom' }) }}
+									</div>
+
+									<div class="col-4 form-group">
+										{{ form_row(form.lastName ,{ 'label': 'Nom' }) }}
+									</div>
+									<div class="col-6 form-group">
+										{{ form_row(form.email ,{ 'label': 'Email' }) }}
+									</div>
+
+									<div class="col-6 form-group">
+										{{ form_row(form.numTel ,{ 'label': 'Tel' }) }}
+									</div>
+									<div class="col-6 form-group">
+										{{ form_row(form.hash ,{ 'label': 'Choisir un mot de passe' }) }}
+									</div>
+
+									<div class="col-6 form-group">
+										{{ form_row(form.passwordConfirm ,{ 'label': 'Confirmation de mot de passe' }) }}
+									</div>
+
+									<div class="col-12 form-group">
+										<button class="button button-3d button-black m-0" id="register-form-submit" name="register-form-submit" value="register">Je m'inscrit</button>
+									</div>
+								</div>
+								{{ form_rest(form) }}
+							{{ form_end(form2)}}
+							{{ form_end(form) }}
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</section><!-- #content end -->
+
+	{# {{ form_start(form) }}
 	{{ form_widget(form) }}
-	<button type="submit" class="classes">submit</button> 
-	{{ form_end(form) }}
+	<button type="submit" class="classes">submit</button>
+	{{ form_end(form) }} #}
 
 {% endblock %}

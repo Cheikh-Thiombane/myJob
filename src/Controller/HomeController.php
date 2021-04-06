@@ -12,8 +12,11 @@ use App\Repository\UserRepository;
 use App\Repository\CandidatRepository;
 use App\Repository\CvRepository;
 use App\Repository\EntrepriseRepository;
+use App\Repository\MetierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
+use App\Repository\RegionRepository;
+use App\Repository\SecteurActiviteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,12 +26,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(EntrepriseRepository $repoE, CandidatRepository $repoC, OffreEmploiRepository $repoO, UserRepository $repoU): Response
+    public function index(SecteurActiviteRepository $repoSec, RegionRepository $repoReg, MetierRepository $repoM,EntrepriseRepository $repoE, CandidatRepository $repoC, OffreEmploiRepository $repoO, UserRepository $repoU): Response
     {
         $users = $repoU->findAll();
         $offres = $repoO->findAll();
         $candidats = $repoC->findAll();
         $entreprises = $repoE->findAll();
+
         $user = new User();
 
         /* foreach ($entreprises as $entreprise) {
@@ -37,8 +41,14 @@ class HomeController extends AbstractController
                 $userEntreprise = $entreprise->getUser();
             }
         } */
-
         $candidat = new Candidat();
+        $candidat_tab =[];
+        foreach ($candidats as $key => $candidat) {
+            if (!is_null($candidat->getCv()->getFormations())) {
+              array_push($candidat_tab , $candidat);
+            }
+        }
+
 
 
         $userEntreprise = new User;//$repoO->findOneByEntreprise($entreprise);
@@ -46,107 +56,27 @@ class HomeController extends AbstractController
 
 
 
-
         $entreprises_length = count($entreprises);
         $candidats_length = count($candidats);
         $offres_length = count($offres);
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'picture' => '',
-            'pays' => '',
-            'entreprises' => $entreprises,
-            'users' => $users,
-            'entreprises_length' => $entreprises,
-            'candidats' => $candidats,
+        if ($this->getUser() !== null && $this->getUser()->getEntreprise() !== NULL) {
+            return $this->redirectToRoute('entreprise_account');
+        }else {
+            # code...
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+                'picture' => '',
+                'pays' => '',
+                'entreprises' => $entreprises,
+                'users' => $users,
+                //'entreprises_length' => $entreprises,
+            'candidats' => $candidat_tab,
             'offres' => $offres,
-            'secteur_activite' => [
-                'Activités associatives',
-                'Administration publique',
-                'Aéronautique, navale',
-                'Agriculture, pêche, aquaculture',
-                'Agroalimentaire',
-                'Ameublement, décoration',
-                'Automobile, matériels de transport, réparation',
-                'Banque, assurance, finances',
-                'BTP, construction',
-                'Centres d´appel, hotline, call center',
-                'Chimie, pétrochimie, matières premières',
-                'Conseil, audit, comptabilité',
-                'Distribution, vente, commerce de gros',
-                'Édition, imprimerie',
-                'Éducation, formation',
-                'Electricité, eau, gaz, nucléaire, énergie',
-                'Environnement, recyclage',
-                'Equip. électriques, électroniques, optiques, précision',
-                'Equipements mécaniques, machines',
-                'Espaces verts, forêts, chasse',
-                'Évènementiel, hôte(sse), accueil',
-                'Hôtellerie, restauration',
-                'Immobilier, architecture, urbanisme',
-                'Import, export',
-                'Industrie pharmaceutique',
-                'Industrie, production, fabrication, autres',
-                'Informatique, SSII, Internet',
-                'Ingénierie, études développement',
-                'Intérim, recrutement',
-                'Location',
-                'Luxe, cosmétiques',
-                'Maintenance, entretien, service après vente',
-                'Manutention',
-                'Marketing, communication, médias',
-                'Métallurgie, sidérurgie',
-                'Nettoyage, sécurité, surveillance',
-                'Papier, bois, caoutchouc, plastique, verre, tabac',
-                'Produits de grande consommation',
-                'Qualité, méthodes',
-                'Recherche et développement',
-                'Santé, pharmacie, hôpitaux, équipements médicaux',
-                'Secrétariat',
-                'Services aéroportuaires et maritimes',
-                'Services autres',
-                'Services collectifs et sociaux, services à la personne',
-                'Sport, action culturelle et sociale',
-                'Télécom',
-                'Textile, habillement, cuir, chaussures',
-                'Tourisme, loisirs',
-                'Transports, logistique, services postaux',
-            ],
-            'metiers' => [
-                'Achats',
-                'Commercial, vente',
-                'Gestion, comptabilité, finance',
-                'Informatique, nouvelles technologies',
-                'Juridique',
-                'Management, direction générale',
-                'Marketing, communication',
-                'Métiers de la santé et du social',
-                'Métiers des services',
-                'Métiers du BTP',
-                'Production, maintenance, qualité',
-                'R&D, gestion de projets',
-                'RH, formation',
-                'Secretariat, assistanat',
-                'Tourisme, hôtellerie, restauration',
-                'Transport, logistique',
-            ],
-            'regions' => [
-                'Dakar',
-                'Diourbel',
-                'Fatick',
-                'Kaffrine',
-                'Kaolack',
-                'Kédougou',
-                'Kolda',
-                'Louga',
-                'Matam',
-                'Saint-Louis',
-                'Sédhiou',
-                'Tambacounda',
-                'Thiès',
-                'Ziguinchor',
-                'International ',
-            ]
-        ]);
+            'secteur_activite' => $repoSec->findAll(),
+            'metiers' => $repoM->findAll(),
+            'regions' => $repoReg->findAll(),
+            ]);
+        }
     }
 
 
@@ -166,31 +96,5 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/candidat', name: 'candidat')]
-    public function Candidat(CandidatRepository $repoC, UserRepository $repoU, CvRepository $repoCv)
-    {
-        $cvs = $repoCv->findAll();
-        $users = $repoU->findAll();
-        $candidats = $repoC->findAll();
 
-        return $this->render('entreprise/show.html.twig', [
-            'candidats' => $candidats,
-            'ville' => '',
-            'pays' => '',
-            'users' => $users,
-        ]);
-    }
-
-    #[Route('/candidat/{slug}', name: 'candidat_show')]
-    public function showCandidat(Candidat $candidat,Request $request, EntityManagerInterface $manager)
-    {
-        $user = $candidat->getUser();
-
-        return $this->render('entreprise/show.html.twig', [
-            'candidat' => $candidat,
-            'ville' => '',
-            'pays' => '',
-            'user' => $user,
-        ]);
-    }
 }

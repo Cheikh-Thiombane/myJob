@@ -52,10 +52,7 @@ class Entreprise
      */
     private $user;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $secteurActivite = [];
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -67,13 +64,31 @@ class Entreprise
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=SecteurActivite::class, inversedBy="entreprises")
+     */
+    private $secteurActivite;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ville;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pays;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $codePostal;
 
 
     public function __construct()
     {
         $this->offreEmplois = new ArrayCollection();
+        $this->secteurActivite = new ArrayCollection();
     }
 
     /**
@@ -173,17 +188,7 @@ class Entreprise
         return $this;
     }
 
-    public function getSecteurActivite(): ?array
-    {
-        return $this->secteurActivite;
-    }
 
-    public function setSecteurActivite(array $secteurActivite): self
-    {
-        $this->secteurActivite = $secteurActivite;
-
-        return $this;
-    }
 
     public function getPicture()
     {
@@ -205,6 +210,66 @@ class Entreprise
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SecteurActivite[]
+     */
+    public function getSecteurActivite(): Collection
+    {
+        return $this->secteurActivite;
+    }
+
+    public function addSecteurActivite(SecteurActivite $secteurActivite): self
+    {
+        if (!$this->secteurActivite->contains($secteurActivite)) {
+            $this->secteurActivite[] = $secteurActivite;
+        }
+
+        return $this;
+    }
+
+    public function removeSecteurActivite(SecteurActivite $secteurActivite): self
+    {
+        $this->secteurActivite->removeElement($secteurActivite);
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?string $pays): self
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }

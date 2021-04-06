@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass=OffreEmploiRepository::class)
  * @ORM\HasLifecycleCallbacks
+ * 
  */
 class OffreEmploi
 {
@@ -42,40 +43,9 @@ class OffreEmploi
      */
     private $descriptionProfil;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $secteurActivite = [];
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $metier = [];
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $typeContrat;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $region;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $niveauEtude;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $niveauExperience;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $langues = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="offreEmplois")
@@ -98,10 +68,52 @@ class OffreEmploi
      */
     private $candidats;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Region::class, inversedBy="offreEmplois")
+     */
+    private $region;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Langue::class, inversedBy="offreEmplois")
+     */
+    private $langues;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=SecteurActivite::class, inversedBy="offreEmplois")
+     */
+    private $secteurActivites;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Metier::class, inversedBy="offreEmplois")
+     */
+    private $metier;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=NiveauEtude::class, inversedBy="offreEmplois")
+     */
+    private $niveauEtude;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=NiveauExperience::class, inversedBy="offreEmplois")
+     */
+    private $niveauExperience;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeContrat::class, inversedBy="offreEmplois")
+     */
+    private $typeContrat;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $renumeration;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->candidats = new ArrayCollection();
+        $this->langues = new ArrayCollection();
+        $this->secteurActivites = new ArrayCollection();
     }
 
     /**
@@ -171,90 +183,6 @@ class OffreEmploi
         return $this;
     }
 
-    public function getSecteurActivite(): ?array
-    {
-        return $this->secteurActivite;
-    }
-
-    public function setSecteurActivite(?array $secteurActivite): self
-    {
-        $this->secteurActivite = $secteurActivite;
-
-        return $this;
-    }
-
-    public function getMetier(): ?array
-    {
-        return $this->metier;
-    }
-
-    public function setMetier(?array $metier): self
-    {
-        $this->metier = $metier;
-
-        return $this;
-    }
-
-
-    public function getTypeContrat(): ?string
-    {
-        return $this->typeContrat;
-    }
-
-    public function setTypeContrat(string $typeContrat): self
-    {
-        $this->typeContrat = $typeContrat;
-
-        return $this;
-    }
-
-    public function getRegion(): ?string
-    {
-        return $this->region;
-    }
-
-    public function setRegion(string $region): self
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    public function getNiveauEtude(): ?int
-    {
-        return $this->niveauEtude;
-    }
-
-    public function setNiveauEtude(int $niveauEtude): self
-    {
-        $this->niveauEtude = $niveauEtude;
-
-        return $this;
-    }
-
-    public function getNiveauExperience(): ?int
-    {
-        return $this->niveauExperience;
-    }
-
-    public function setNiveauExperience(int $niveauExperience): self
-    {
-        $this->niveauExperience = $niveauExperience;
-
-        return $this;
-    }
-
-    public function getLangues(): ?array
-    {
-        return $this->langues;
-    }
-
-    public function setLangues( $langues): self
-    {
-        $this->langues = $langues;
-
-        return $this;
-    }
 
     public function getEntreprise(): ?Entreprise
     {
@@ -330,6 +258,126 @@ class OffreEmploi
         if ($this->candidats->removeElement($candidat)) {
             $candidat->removeOffre($this);
         }
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Langue[]
+     */
+    public function getLangues(): Collection
+    {
+        return $this->langues;
+    }
+
+    public function addLangue(Langue $langue): self
+    {
+        if (!$this->langues->contains($langue)) {
+            $this->langues[] = $langue;
+        }
+
+        return $this;
+    }
+
+    public function removeLangue(Langue $langue): self
+    {
+        $this->langues->removeElement($langue);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SecteurActivite[]
+     */
+    public function getSecteurActivites(): Collection
+    {
+        return $this->secteurActivites;
+    }
+
+    public function addSecteurActivite(SecteurActivite $secteurActivite): self
+    {
+        if (!$this->secteurActivites->contains($secteurActivite)) {
+            $this->secteurActivites[] = $secteurActivite;
+        }
+
+        return $this;
+    }
+
+    public function removeSecteurActivite(SecteurActivite $secteurActivite): self
+    {
+        $this->secteurActivites->removeElement($secteurActivite);
+
+        return $this;
+    }
+
+    public function getMetier(): ?Metier
+    {
+        return $this->metier;
+    }
+
+    public function setMetier(?Metier $metier): self
+    {
+        $this->metier = $metier;
+
+        return $this;
+    }
+
+    public function getNiveauEtude(): ?NiveauEtude
+    {
+        return $this->niveauEtude;
+    }
+
+    public function setNiveauEtude(?NiveauEtude $niveauEtude): self
+    {
+        $this->niveauEtude = $niveauEtude;
+
+        return $this;
+    }
+
+    public function getNiveauExperience(): ?NiveauExperience
+    {
+        return $this->niveauExperience;
+    }
+
+    public function setNiveauExperience(?NiveauExperience $niveauExperience): self
+    {
+        $this->niveauExperience = $niveauExperience;
+
+        return $this;
+    }
+
+    public function getTypeContrat(): ?TypeContrat
+    {
+        return $this->typeContrat;
+    }
+
+    public function setTypeContrat(?TypeContrat $typeContrat): self
+    {
+        $this->typeContrat = $typeContrat;
+
+        return $this;
+    }
+
+    public function getRenumeration(): ?int
+    {
+        return $this->renumeration;
+    }
+
+    public function setRenumeration(?int $renumeration): self
+    {
+        $this->renumeration = $renumeration;
 
         return $this;
     }

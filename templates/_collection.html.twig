@@ -1,43 +1,128 @@
 {% block _cv_formations_widget %}
-    {{ form_widget(form) }}
+    {{ form_widget(form,{'attr' :{'class' : ''}}) }}
     <input type="hidden" value="0" id="widgets-counter">
     <div class="form-group">
-      <button type="button" id="cv-formation" class="btn btn-primary ">Ajouter une image</button>
+      <button type="button" id="cv-formation" class="btn btn-primary ">Ajouter une formation</button>
     </div>
 {% endblock %}
 
 {% block _cv_formations_entry_row %}
-    {{ form_widget(form) }}
+    <div class="col-10">
+      {{ form_widget(form) }}
+    </div>
 {% endblock %}
 
 {% block _cv_formations_entry_widget %}
-    <div class="form-group border border-success" id="block_{{id}}">
-      <div class="form-row">
-        <div class="col-4 form-group " >DATE DEBUT: {{ form_widget(form.dateDebut ) }} </div>
-        <div class="col-4 form-group" >DATE Fin: {{ form_widget(form.dateFin ) }} </div>
-        <div class="col-4 from-group">
-          <div class=" col-2">
+    <div class="form-group shadow bg-light border " id="block_{{id}}">
+      <div class="form-row ml-5">
+        <div class="col-4 form-group mt-3" >DATE DEBUT: {{ form_widget(form.dateDebut,{'attr' :{'class' : 'form-control datepicker valid'}} ) }} </div>
+        <div class="col-4 form-group mt-3" >DATE FIN: {{ form_widget(form.dateFin,{'attr' :{'class' : 'form-control datepicker',
+                                                                                                        'data-date-start-date':'-2m',
+                                                                                                        'data-date-end-date':'0d'}} ) }} </div>
+        <div class="col-4 ">
+          <div class=" col-2 float-right">
             <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
           </div>
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row ml-5">
         <div class="form-group col-md-5">
           {{ form_widget(form.titre) }}
           {{ form_errors(form.titre) }}
         </div>
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-5 ml-5">
             {{ form_widget(form.nomEcole) }}
             {{ form_errors(form.nomEcole) }}
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row ml-5">
         <div class="col-10 form-group mb-4">
           {{ form_row(form.description) }}
         </div>
       </div>
     </div>
 {% endblock %}
+{% block _cv_experiences_widget %}
+    {{ form_widget(form) }}
+    <input type="hidden" value="0" id="widgets-counter_1">
+    <div class="form-group">
+      <button type="button" id="cv-experience" class="btn btn-primary ">Ajouter une experience</button>
+    </div>
+{% endblock %}
+
+{% block _cv_experiences_entry_row %}
+<div class="col-10">
+    {{ form_widget(form) }}
+</div>
+{% endblock %}
+
+{% block _cv_experiences_entry_widget %}
+    <div class="form-group shadow bg-light border" id="block_{{id}}">
+      <div class="form-row ml-5">
+        <div class="col-4 form-group mt-3" >DATE DEBUT: {{ form_widget(form.dateDebut,{'attr' :{'class' : 'form-control datepicker valid'}} ) }} </div>
+        <div class="col-4 form-group mt-3" >DATE FIN: {{ form_widget(form.dateFin,{'attr' :{'class' : 'form-control datepicker',
+                                                                                                        'data-date-start-date':'-2m',
+                                                                                                        'data-date-end-date':'0d'}} ) }} </div>
+        <div class="col-4  ">
+        <div class="col-2 float-right">
+            <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn  btn-danger">X</button>
+        </div>
+        </div>
+      </div>
+      <div class="form-row ml-5">
+        <div class="form-group col-md-5">
+          {{ form_widget(form.poste) }}
+          {{ form_errors(form.poste) }}
+        </div>
+        <div class="form-group col-md-5">
+            {{ form_widget(form.entreprise) }}
+            {{ form_errors(form.entreprise) }}
+        </div>
+      </div>
+      <div class="form-row ml-5">
+        <div class="col-10 form-group mb-4">
+          {{ form_row(form.description) }}
+        </div>
+      </div>
+    </div>
+{% endblock %}
+ {% block _cv_niveauExperience_row %}
+<div class="form-row ml-5 ">
+        <div class="col-md-3 py-1">
+          {{ form_label(form) }} :
+        </div>
+        <div class="form-group col-md-5">
+          {{ form_widget(form,{'attr' :{'class' : 'selectpicker'}}) }}
+          {{ form_errors(form) }}
+        </div>
+      </div>
+{% endblock %}
+ {% block _cv_niveauEtude_row %}
+    <div class="form-row ml-5">
+        <div class="col-md-2 py-1">
+          {{ form_label(form) }} :
+        </div>
+        <div class="form-group col-md-5">
+          {{ form_widget(form,{'attr' :{'class' : 'selectpicker'}}) }}
+          {{ form_errors(form) }}
+        </div>
+
+      </div>
+{% endblock %}
+{# {% for secteur in critere.secteurActivite %}
+{% block _critere_secteurActivite_{{secteur.id}}_row %}
+<div class="form-row">
+  <div class="col-md-2 py-1">
+      {{ form_label(form) }} :
+    </div>
+    <div class="form-group col-md-5">
+      {{ form_widget(form) }}
+      {{ form_errors(form) }}
+    </div>
+</div>
+
+{% endblock %}
+{% endfor %} #}
 {# {% block form_row %}
 
       {{ form_errors(form) }}
@@ -106,13 +191,18 @@
 
       </div>
 {% endblock %}
-{% block choice_row  %}
-      {{ form_errors(form) }}
-      <div class="col-2 form-group">
-
+{# {% block choice_row  %}
+        {{ form_label(form) }}
+      <div class="col-4 form-group">
+       {{ form_errors(form) }}
          {{ form_widget(form) }}
 
       </div>
+{% endblock %} #}
+{% block _critere_row %}
+  <div class="from-row">
+    {{ form_widget(form) }}
+  </div>
 {% endblock %}
 {# <form>
   <div class="form-row">

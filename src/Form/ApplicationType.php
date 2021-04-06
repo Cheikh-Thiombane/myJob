@@ -25,5 +25,22 @@ class ApplicationType extends AbstractType
         ], $options);
     }
 
+   /**
+     * Permet la configuration de base d'un Champ
+     *
+     * @param string $placeholder
+     * @param array $options
+     * @return array
+     */
+    protected function getConfiguration_1( $placeholder, $options = [])
+    {
+        return array_merge([
+            'attr' =>[
+                'placeholder' => $placeholder,
+                'class' => 'form-control'
+            ]
+        ], $options);
+    }
+
 }
 

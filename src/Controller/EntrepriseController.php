@@ -4,8 +4,15 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Entreprise;
-use App\Repository\EntrepriseRepository;
+use App\Form\EntrepriseType;
+use App\Form\EditEntrepriseType;
 use App\Repository\UserRepository;
+use App\Repository\EntrepriseRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NiveauEtudeRepository;
+use App\Repository\SecteurActiviteRepository;
+use Symfony\Component\HttpFoundation\Request;
+use App\Repository\NiveauExperienceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -129,6 +136,69 @@ class EntrepriseController extends AbstractController
             'ville' => '',
             'pays' => '',
             'user' => $user,
+        ]);
+    }
+    #[Route('/entreprise/view', name: 'entreprise_account')]
+    public function my_account(Request $request, EntityManagerInterface $manager)
+    {
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+        // $obb = $repo->findOneBySlug($slug);
+
+        return $this->render('entreprise/showEntreprise.html.twig', [
+            'entreprise' => $entreprise,
+            'ville' => '',
+            'pays' => '',
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/entreprise/edit', name:'entreprise_edit')]
+    public function editEntreprise(SecteurActiviteRepository $repoSec ,Request $request, EntityManagerInterface $manager)
+    {
+        $secteurActivites = $repoSec->findAll();
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+
+        $form = $this->createForm(EditEntrepriseType::class,$user);
+        $form2 = $this->createForm(EntrepriseType::class,$entreprise);
+
+        $form->handleRequest($request);
+        $form2->handleRequest($request);
+        if (isset($_POST['secteur'])) {
+            foreach ($_POST['secteur'] as $key => $value) {
+                $id = $value;
+                $secteurActivite = $repoSec->find($id);
+                $entreprise->addSecteurActivite($secteurActivite);
+            }
+        }
+        //$secteurActivite = $request->request->get('')
+        //$entreprise->addSecteurActivite($request-)
+        if ($form->isSubmitted() && $form->isValid()){
+            if ($form2->isSubmitted() && $form2->isValid()){
+            //$password = $encoder->encodePassword($user, $user->getHash());
+            //$user->setHash($password);
+            //$userEntreprise = $this->getUser();
+            $entreprise->setUser($user);
+            $manager->persist($user);
+            $manager->persist($entreprise);
+
+            $manager->flush();
+
+            $this->addFlash(
+                'success', "Votre compte a bien été créé ! Vous pouvez maintenant vous connecter !"
+            );
+
+            return $this->redirectToRoute('entreprise_account');
+            }
+        }
+
+        return $this->render('entreprise/edit.html.twig', [
+            'form' => $form->createView(),
+            'form2' =>$form2->createView(),
+            'entreprise' => $entreprise,
+            'user' => $user,
+
         ]);
     }
 }

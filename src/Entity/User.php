@@ -93,7 +93,7 @@ class User implements UserInterface
      */
     private $offreEmplois;
 
-    
+
 
     /**
      * @ORM\OneToOne(targetEntity=Entreprise::class, mappedBy="user", cascade={"persist", "remove"})
@@ -105,9 +105,15 @@ class User implements UserInterface
      */
     private $hash;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="users")
+     */
+    private $userRoles;
+
     public function __construct()
     {
         $this->offreEmplois = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
     public function __toString()
@@ -297,7 +303,12 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->userRoles->map(function($role){
+            return $role->getTitle();
+        })->toArray();
+
+        $roles[] = 'ROLE_USER';
+        return $roles;
     }
 
     public function getPassword() {
@@ -343,6 +354,33 @@ class User implements UserInterface
     public function setHash(string $hash): self
     {
         $this->hash = $hash;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->removeElement($userRole)) {
+            $userRole->removeUser($this);
+        }
 
         return $this;
     }

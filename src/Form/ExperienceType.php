@@ -18,8 +18,8 @@ class ExperienceType extends ApplicationType
         $builder
             ->add('poste', TextType::class,$this->getConfiguration("Poste"))
             ->add('entreprise', TextType::class,$this->getConfiguration("Poste"))
-            ->add('dateDebut', DateType::class,$this->getConfiguration("Date Début"))
-            ->add('dateFin',DateType::class,$this->getConfiguration("Date Début"))
+            ->add('dateDebut',TextType::class, $this->getConfiguration("Date Debut"))
+            ->add('dateFin',TextType::class, $this->getConfiguration("Date Fin"))
             ->add('description',TextareaType::class,$this->getConfiguration("Description"))
         ;
     }

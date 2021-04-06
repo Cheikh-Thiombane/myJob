@@ -20,6 +20,8 @@
 
 {% block body %}
 <link rel="stylesheet" type="text/css" id="u0" href="/js/components/tinymce/skins/ui/oxide/skin.min.css">
+{% set cv = user.candidat.cv %}
+{% set critere = user.candidat.critere %}
     <section id="content">
 			<div class="content-wrap">
 				<div class="container clearfix">
@@ -28,7 +30,7 @@
 
 						<div class="col-md-9">
 
-							<img src="/images/icons/avatar.jpg" class="alignleft img-circle img-thumbnail my-0" alt="Avatar" style="max-width: 84px;">
+							<img src="{{user.candidat.picture}}" class="alignleft img-circle img-thumbnail my-0" alt="Avatar" style="max-width: 84px;">
 
 							<div class="heading-block border-0">
 								<h3>{{candidat.user.firstName}} {{candidat.user.lastName}} </h3>
@@ -44,234 +46,268 @@
 									<div class="tabs tabs-alt clearfix ui-tabs ui-corner-all ui-widget ui-widget-content" id="tabs-profile">
 
 										<ul class="tab-nav clearfix ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header" role="tablist">
-											<li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="tab-feeds" aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true"><a href="#tab-feeds" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-1"><i class="icon-rss2"></i> offres</a></li>
+											<li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="tab-feeds" aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true"><a href="#tab-feeds" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-1"><i class="icon-rss2"></i> Information</a></li>
 											<li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tab-posts" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false"><a href="#tab-posts" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-2"><i class="icon-pencil2"></i> Cv </a></li>
-											<li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tab-replies" aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false"><a href="#tab-replies" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3"><i class="icon-reply"></i> Replies</a></li>
+											<li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tab-replies" aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false"><a href="#tab-replies" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3"><i class="icon-reply"></i> Offres postuler</a></li>
 											<li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tab-connections" aria-labelledby="ui-id-4" aria-selected="false" aria-expanded="false"><a href="#tab-connections" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-4"><i class="icon-users"></i> Connections</a></li>
 										</ul>
 
 										<div class="tab-container">
 
 											<div class="tab-content clearfix ui-tabs-panel ui-corner-bottom ui-widget-content" id="tab-feeds" aria-labelledby="ui-id-1" role="tabpanel" aria-hidden="false" style="">
+												<div class="col-md-12 py-1 postcontent" style="background-color: #F5F5F5;">
+													<div>
+														<div class="heading-block">
+															<div class="row mt-5">
+																<div class="col-5">
+																	{# <img src="{{entreprise.picture}}" class="border border-f5 border-dark " alt="" srcset=""> #}
+																</div>
+																<div class="col-7">
+																	<h3> {{user.civilite}} {{user.firstName}} {{user.lastName}} </h3>
+																	<span class="before-heading color">{{user.address}} &amp; {{user.ville}}</span>
+																</div>
+															</div>
+														</div>
 
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium harum ea quo! Nulla fugiat earum, sed corporis amet iste non, id facilis dolorum, suscipit, deleniti ea. Nobis, temporibus magnam doloribus. Reprehenderit necessitatibus esse dolor tempora ea unde, itaque odit. Quos.</p>
+														<div class="row col-mb-50">
+															<div class="col-lg-12 mb-4">
+																	<div class="row">
+																		<span class="col-6 h4">Prénom :</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.firstName}}
+																		</div>
+																	</div>
+																	<div class="row">
+																		<span class="col-6 h4">Nom :</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.lastName}}
+																		</div>
+																	</div>
+																	<div class="row">
+																		<span class="col-6 h4">Téléphone :</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.numTel}}
+																		</div>
+																	</div>
+																	<div class="row">
+																		<span class="col-6 h4">Email :</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.email}}
+																		</div>
+																	</div>
+																	<div class="row">
+																		<span class="col-6 h4">Ville :</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.ville}}
+																		</div>
+																	</div>
+																	<div class="row">
+																		<span class="col-6 h4">Pays de résidence:</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.pays}}
+																		</div>
+																	</div>
+																	<div class="row">
+																		<span class="col-6 h4">Nationalité :</span>
+																		<div class="col-6 h5 dark-color" style="width: 60%;">
+																			{{user.nationalite}}
+																		</div>
+																	</div>
 
-												<table class="table table-bordered table-striped">
-												  <thead>
-													<tr>
-													  <th>Time</th>
-													  <th>Activity</th>
-													</tr>
-												  </thead>
-												  <tbody>
-													{% for offre in candidat.offres %}
+																	<div class="row">
+																		<span class="col-6 h4">Adresse :</span>
+																			<div class="float-center col-6 h5 dark-color" style="width: 80%;">
+																					{{user.address}}
+																			</div>
+																	</div>
+															</div>
 
-														<tr>
-															<td>
-															<code>5/23/2021</code>
-															</td>
-															<td>{{offre}}</td>
-														</tr>
+															<div class="col-lg-12">
+															<div class="content">
+																	<blockquote>
+																			 {{cv.competence | raw}}
+																	</blockquote>
 
-													{% endfor %}
+															</div>
 
-												  </tbody>
-												</table>
+																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
+																	<i class="icon-facebook"></i>
+																	<i class="icon-facebook"></i>
+																</a>
+																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
+																	<i class="icon-twitter"></i>
+																	<i class="icon-twitter"></i>
+																</a>
+																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
+																	<i class="icon-gplus"></i>
+																	<i class="icon-gplus"></i>
+																</a>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
 
 											</div>
 											<div class="tab-content clearfix ui-tabs-panel ui-corner-bottom ui-widget-content" id="tab-posts" aria-labelledby="ui-id-2" role="tabpanel" aria-hidden="true" style="display: none;">
-													<h3>Completez votre Cv</h3>
-												<!-- Posts
-												============================================= -->
-												{{ form_start(form) }}
-														<div class="form-row">
-															<div class="form-group col-md-12">
-																<div>
-																	<input id="cv_niveauEtude" class="radio-style " name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Qualification avant bac</label>
-																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac</label>
-																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+1</label>
-																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+2</label>
-																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+3</label>
-																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+4</label>
-																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
-																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+5 et plus</label>
+
+											<div class="col-md-12 py-1 postcontent" style="background-color: #F5F5F5;">
+													<div>
+														<div class="heading-block">
+															<div class="row mt-5">
+																<div class="col-5">
+																	{# <img src="{{entreprise.picture}}" class="border border-f5 border-dark " alt="" srcset=""> #}
+																</div>
+																<div class="col-7">
+																	<h3>{{user.firstName}} {{user.lastName}} </h3>
+																	<span class="before-heading color">{{user.address}} &amp; {{user.ville}}</span>
 																</div>
 															</div>
-															<div class="form-group col-md-12">
-																{{ form_row(form.formations) }}
-															</div>
-
-														<div class="form-group col-md-12">
-																{{ form_row(form.niveauExperience) }}
-															</div>
-															<div class="form-group col-md-12">
-															<h4>Experiences:</h4>
-																{{ form_widget(form.experiences) }}
-															</div>
 														</div>
-														{# <button type="submit" class="btn btn-primary">Sign in</button> #}
-
-												{{ form_end(form) }}
-
-
-											</div>
-											<div class="tab-content clearfix ui-tabs-panel ui-corner-bottom ui-widget-content" id="tab-replies" aria-labelledby="ui-id-3" role="tabpanel" aria-hidden="true" style="display: none;">
-
-												<div class="clear topmargin-sm"></div>
-												<ol class="commentlist border-0 m-0 p-0 clearfix">
-													<li class="comment even thread-even depth-1" id="li-comment-1">
-														<div id="comment-1" class="comment-wrap clearfix">
-															<div class="comment-meta">
-																<div class="comment-author vcard">
-																	<span class="comment-avatar clearfix">
-																	<img alt="Image" src="https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60" class="avatar avatar-60 photo avatar-default" height="60" width="60"></span>
-																</div>
-															</div>
-															<div class="comment-content clearfix">
-																<div class="comment-author">John Doe<span><a href="#" title="Permalink to this comment">April 24, 2012 at 10:46 am</a></span></div>
-																<p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-																<a class="comment-reply-link" href="#"><i class="icon-reply"></i></a>
-															</div>
-															<div class="clear"></div>
-														</div>
-														<ul class="children">
-															<li class="comment byuser comment-author-_smcl_admin odd alt depth-2" id="li-comment-3">
-																<div id="comment-3" class="comment-wrap clearfix">
-																	<div class="comment-meta">
-																		<div class="comment-author vcard">
-
-																			<span class="comment-avatar clearfix">
-																			<img alt="Image" src="https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=40&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G" class="avatar avatar-40 photo" height="40" width="40"></span>
-
+															<div class="fancy-title title-bottom-border mb-2">
+																		<h1>Competence et Formation</h1>
+																	</div>
+														<div class="row col-mb-50">
+															<div class="col-lg-12 mb-4">
+																	<div class="row">
+																		<span class="col-6 h4">Niveau d'etudes :</span>
+																		<div class="col-6  color" style="width: 60%;">
+																			{{cv.niveauEtude}}
 																		</div>
 																	</div>
-																	<div class="comment-content clearfix">
-																		<div class="comment-author"><a href="#" rel="external nofollow" class="url">SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
+																	<div class="row">
+																		<span class="col-6 h4 ">Formations :</span>
+																		<div class="col-12  dark-color" style="width: 60%;">
+																					<table class="table table-bordered shadow bg-light border border-f5 table-striped">
+																						<thead>
+																						<tr>
+																							<th>Titre</th>
+																							<th>Etablissement</th>
+																							<th>Date Debut</th>
+																							<th>Date Fin</th>
+																						</tr>
+																						</thead>
+																						<tbody>
+																						{% for formation in cv.formations %}
+																						<tr>
+																							<td>
+																								{{formation.titre}}
+																							</td>
+																							<td>
+																								{{formation.nomEcole}}
+																							</td>
+																							<td>
+																							<code>{{formation.dateDebut |date('d/m/Y')}}</code>
+																							</td>
+																							<td>
+																							<code>{{formation.dateFin  |date('d/m/Y')}}</code>
+																							</td>
+																						</tr>
+																						{% endfor %}
 
-																		<p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-
-																		<a class="comment-reply-link" href="#"><i class="icon-reply"></i></a>
+																						</tbody>
+																					</table>
+																		</div>
 																	</div>
-																	<div class="clear"></div>
-																</div>
-															</li>
-														</ul>
-													</li>
+																	<div class="row mt-3">
+																		<span class="col-6 h4 ">Niveau Experience:</span>
+																		<div class="col-6  color" style="width: 60%;">
+																			{{cv.niveauExperience}}
+																		</div>
+																	</div>
+																	<div class="row mt-3">
+																		<span class="col-6 h4">Experience :</span>
+																		<div class="col-12  dark-color" style="width: 60%;">
+																					<table class="table table-bordered shadow bg-light border border-f5 table-striped">
+																						<thead>
+																						<tr>
+																							<th>Poste</th>
+																							<th>Entreprise</th>
+																							<th>Date Debut</th>
+																							<th>Date Fin</th>
+																						</tr>
+																						</thead>
+																						<tbody>
+																						{% for experience in cv.experiences %}
+																						<tr>
+																							<td>
+																								{{experience.poste}}
+																							</td>
+																							<td>
+																								{{experience.entreprise}}
+																							</td>
+																							<td>
+																							<code>{{experience.dateDebut |date('d/m/Y')}}</code>
+																							</td>
+																							<td>
+																							<code>{{experience.dateFin  |date('d/m/Y')}}</code>
+																							</td>
+																						</tr>
+																						{% endfor %}
 
-													<li class="comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1" id="li-comment-2">
-														<div class="comment-wrap clearfix">
-															<div class="comment-meta">
-																<div class="comment-author vcard">
-																	<span class="comment-avatar clearfix">
-																	<img alt="Image" src="https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G" class="avatar avatar-60 photo" height="60" width="60"></span>
-																</div>
+																						</tbody>
+																					</table>
+																		</div>
+																	</div>
+																	<div class="fancy-title title-bottom-border mt-3 mb-2">
+																		<h1 >Critères de recherche</h1>
+																	</div>
+																	<div class="row mt-5">
+																		<span class="col-6 h4 ">Secteur d'activités :</span>
+																		<div class="col-6  color" style="width: 60%;">
+																			{% for secteur in critere.secteurActivites %}
+																						{{secteur}}
+																			{% endfor %}
+																		</div>
+																	</div>
+																	<div class="row mt-3">
+																		<span class="col-6 h4 ">Langues:</span>
+																		<div class="col-6  color" style="width: 60%;">
+																			{% for langue in critere.langues %}
+																						{{langue}}
+																			{% endfor %}
+																		</div>
+																	</div>
+																	<div class="row mt-3">
+																		<span class="col-6 h4">Metier :</span>
+																		<div class="col-6  color" style="width: 60%;">
+																			{{critere.metier}}
+																		</div>
+																	</div>
+
+																	<div class="row mt-3">
+																		<span class="col-6 h4">Type de Contrat Souhaiter :</span>
+																			<div class="float-center col-6  color" style="width: 80%;">
+																			{% for contrat in critere.typeContrats %}
+																					{{contrat}},
+																			{% endfor %}
+																			</div>
+																	</div>
+																	<div class="row mt-3">
+																		<span class="col-6 h4">Salaire minimum exige :</span>
+																			<div class="float-center col-6  color" style="width: 80%;">
+																					{{critere.renumeration }}
+																			</div>
+																	</div>
+																	<div class="row mt-3">
+																		<span class="col-6 h4">Mobilités :</span>
+																			<div class="float-center col-6  color" style="width: 80%;">
+																					{% for mobilite in critere.mobilites %}
+																							{{mobilite }},
+																					{% endfor %}
+																			</div>
+																	</div>
 															</div>
-															<div class="comment-content clearfix">
-																<div class="comment-author"><a href="https://themeforest.net/user/semicolonweb" rel="external nofollow" class="url">SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
 
-																<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+															<div class="col-lg-12">
+															{# <div class="content">
+																	<blockquote>
+																			 {{cv.competence | raw}}
+																	</blockquote>
 
-																<a class="comment-reply-link" href="#"><i class="icon-reply"></i></a>
-															</div>
-															<div class="clear"></div>
-														</div>
-													</li>
+															</div> #}
 
-												</ol>
-
-											</div>
-											<div class="tab-content clearfix ui-tabs-panel ui-corner-bottom ui-widget-content" id="tab-connections" aria-labelledby="ui-id-4" role="tabpanel" aria-hidden="true" style="display: none;">
-
-												<div class="row topmargin-sm">
-													<div class="col-lg-3 col-md-6 bottommargin">
-
-														<div class="team">
-															<div class="team-image">
-																<img src="images/team/3.jpg" alt="John Doe">
-															</div>
-															<div class="team-desc">
-																<div class="team-title"><h4>John Doe</h4><span>CEO</span></div>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
-																	<i class="icon-facebook"></i>
-																	<i class="icon-facebook"></i>
-																</a>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
-																	<i class="icon-twitter"></i>
-																	<i class="icon-twitter"></i>
-																</a>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
-																	<i class="icon-gplus"></i>
-																	<i class="icon-gplus"></i>
-																</a>
-															</div>
-														</div>
-
-													</div>
-
-													<div class="col-lg-3 col-md-6 bottommargin">
-
-														<div class="team">
-															<div class="team-image">
-																<img src="images/team/2.jpg" alt="Josh Clark">
-															</div>
-															<div class="team-desc">
-																<div class="team-title"><h4>Josh Clark</h4><span>Co-Founder</span></div>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
-																	<i class="icon-facebook"></i>
-																	<i class="icon-facebook"></i>
-																</a>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
-																	<i class="icon-twitter"></i>
-																	<i class="icon-twitter"></i>
-																</a>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
-																	<i class="icon-gplus"></i>
-																	<i class="icon-gplus"></i>
-																</a>
-															</div>
-														</div>
-
-													</div>
-
-													<div class="col-lg-3 col-md-6 bottommargin">
-
-														<div class="team">
-															<div class="team-image">
-																<img src="images/team/8.jpg" alt="Mary Jane">
-															</div>
-															<div class="team-desc">
-																<div class="team-title"><h4>Mary Jane</h4><span>Sales</span></div>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
-																	<i class="icon-facebook"></i>
-																	<i class="icon-facebook"></i>
-																</a>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
-																	<i class="icon-twitter"></i>
-																	<i class="icon-twitter"></i>
-																</a>
-																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
-																	<i class="icon-gplus"></i>
-																	<i class="icon-gplus"></i>
-																</a>
-															</div>
-														</div>
-
-													</div>
-
-													<div class="col-lg-3 col-md-6">
-
-														<div class="team">
-															<div class="team-image">
-																<img src="images/team/4.jpg" alt="Nix Maxwell">
-															</div>
-															<div class="team-desc">
-																<div class="team-title"><h4>Nix Maxwell</h4><span>Support</span></div>
 																<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
 																	<i class="icon-facebook"></i>
 																	<i class="icon-facebook"></i>
@@ -291,6 +327,41 @@
 												</div>
 
 											</div>
+											<div class="tab-content clearfix ui-tabs-panel ui-corner-bottom ui-widget-content" id="tab-replies" aria-labelledby="ui-id-3" role="tabpanel" aria-hidden="true" style="display: none;">
+
+
+												<table class="table table-bordered table-striped">
+												  <thead>
+													<tr>
+													  <th>Offres</th>
+													  <th>Entreprise</th>
+													  <th>Action</th>
+													</tr>
+												  </thead>
+												  <tbody>
+													{% for offre in user.candidat.offres %}
+														<tr>
+															<td>{{offre.poste}}</td>
+															<td>
+															{{offre.entreprise.nom}}
+															</td>
+															<td>
+															{% set url = path('emploi_remove', {'id' : offre.id} ) %}
+															<a class="btn btn-danger" href="{{ url }}" onclick="return confirm(`Êtes vous sur de vouloir retirer {{offre.poste}} ?`) ">retirer</a>
+															</td>
+														</tr>
+													{% endfor %}
+
+												  </tbody>
+												</table>
+												<div class="clear topmargin-sm"></div>
+
+											</div>
+											<div class="tab-content clearfix ui-tabs-panel ui-corner-bottom ui-widget-content" id="tab-connections" aria-labelledby="ui-id-4" role="tabpanel" aria-hidden="true" style="display: none;">
+
+
+
+											</div>
 
 										</div>
 
@@ -307,12 +378,12 @@
 						<div class="col-md-3">
 
 							<div class="list-group">
-								<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Profile</div><i class="icon-user"></i></a>
-								<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Servers</div><i class="icon-laptop2"></i></a>
-								<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Messages</div><i class="icon-envelope2"></i></a>
+								<a href="{{ path('my_account') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Profile</div><i class="icon-user"></i></a>
+								<a href="{{ path('edit_cv') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Edition du Cv</div><i class="icon-laptop2"></i></a>
+								<a href="{{ path('edit_critere') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Mes Critères de Recherche</div><i class="icon-envelope2"></i></a>
 								<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Billing</div><i class="icon-credit-cards"></i></a>
-								<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Settings</div><i class="icon-cog"></i></a>
-								<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Logout</div><i class="icon-line2-logout"></i></a>
+								<a href="{{ path('edit_profil') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Settings</div><i class="icon-cog"></i></a>
+								<a href="{{ path('account_logout') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Logout</div><i class="icon-line2-logout"></i></a>
 							</div>
 
 							<div class="fancy-title topmargin title-border">

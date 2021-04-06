@@ -1,0 +1,328 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+{% block stylesheets %}
+<style>
+		.form-group > label.error {
+			display: block !important;
+			text-transform: none;
+		}
+
+		.form-group input.valid ~ label.error,
+		.form-group input[type="text"] ~ label.error,
+		.form-group input[type="email"] ~ label.error,
+		.form-group input[type="number"] ~ label.error,
+		.form-group select ~ label.error { display: none !important; }
+	</style>
+{% endblock %}
+
+{# {% form_theme form '/_collection.html.twig' %} #}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" id="u0" href="/js/components/tinymce/skins/ui/oxide/skin.min.css">
+{# {% set cv = user.candidat.cv %} #}
+{# {% set critere = user.candidat.critere %} #}
+		<section id="slider" class="slider-element slider-parallax include-header min-vh-100 slider-parallax-visible" style="background: url(&quot;/images/slider/full/1.jpg&quot;) center center / cover; margin-top: -102px;">
+			<div class="slider-inner" style="transform: translate3d(0px, 0px, 0px); height: 635px;">
+
+				<div class="vertical-middle slider-element-fade" style="opacity: 1.54896;">
+					<div class="container text-center">
+
+						<div class="heading-block border-bottom-0 mb-0">
+							<h1>
+								<div class="text-rotater" data-separator="|" data-rotate="flipInX" data-speed="3500">
+									{{entreprise.nom}}
+								</div>
+							</h1>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<!-- Content
+		============================================= -->
+      <section id="content">
+        <div class="content-wrap">
+          <div class="container clearfix">
+
+            <div class="row gutter-40 col-mb-80 ">
+
+
+							<div class="col-md-3 sidebar" style="background-color: #FFF;; background-size: 500px 300px;">
+
+									<div class="list-group">
+									<a href="{{ path('entreprise_account') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Profile</div><i class="icon-user"></i></a>
+									<a href="{{ path('entreprise_edit') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Edition du Profile</div><i class="icon-credit-cards"></i></a>
+									<a href="{{ path('account_password') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Settings</div><i class="icon-cog"></i></a>
+									<a href="{{ path('account_logout') }}" class="list-group-item list-group-item-action d-flex justify-content-between"><div>Logout</div><i class="icon-line2-logout"></i></a>
+								</div>
+							</div>
+
+							<div class="col-md-9 postcontent" style="background-color: #F5F5F5;">
+                        <div class="clear"></div>
+                            <div class="title-block">
+                              <h2>Information Entreprise</h2>
+                            </div>
+                            <div class="content shadow bg-light border px-5 py-md-3">
+
+                      <div>
+
+                                {{form_start(form2,{'attr' :{'class' : 'row mb-0'}}) }}
+                          <div class="col-6 form-group">
+                            {{ form_row(form2.nom ,{ 'label': 'Nom de l\'entreprise' }) }}
+                          </div>
+                          <div class="col-6 form-group">
+                            {{ form_row(form2.site ,{ 'label': 'Site Intenet' }) }}
+                          </div>
+                          <div class="col-4 form-group">
+                            {{ form_row(form2.ville ,{ 'label': 'ville' }) }}
+                          </div>
+                          <div class="col-4 form-group">
+                            {{ form_row(form2.pays ,{ 'label': 'Pays' }) }}
+                          </div>
+                          <div class="col-4 form-group">
+                            {{ form_row(form2.codePostal ,{ 'label': 'Code Postal' }) }}
+                          </div>
+                        <div class="col-12 form-group">
+                            {{ form_row(form2.description ,{ 'label': 'Description de l\'entreprise' }) }}
+                        </div>
+                        <div class="col-12">
+                          {{ form_label(form2.secteurActivite) }}
+                        </div>
+                        {% for secteur in form2.secteurActivite %}
+                            <div class="col-6 form-group">
+                              {{ form_widget(secteur)  }}
+                              {{ form_label(secteur ) }}
+                            </div>
+                          {% endfor %}
+											</div>
+
+										</div>
+										<div class="mt-6"></div>
+										<div class="title-block">
+											<h2>Cordonné de contact</h2>
+										</div>
+												<div class="content shadow bg-light border px-5 py-md-3">
+
+											<div>
+
+
+													<div class="row col-mb-50">
+														{{ form_start(form,{'attr' :{'class' : 'row mb-0'}}) }}
+                                <div class="row ">
+                                  <div class="col-3 form-group">
+                                    {{ form_row(form.civilite ,{ 'label': 'Civilité' }) }}
+                                  </div>
+                                  <div class="col-5 form-group">
+                                    {{ form_row(form.firstName ,{ 'label': 'Prénom' }) }}
+                                  </div>
+
+                                  <div class="col-4 form-group">
+                                    {{ form_row(form.lastName ,{ 'label': 'Nom' }) }}
+                                  </div>
+                                  <div class="col-6 form-group">
+                                    {{ form_row(form.email ,{ 'label': 'Email' }) }}
+                                  </div>
+
+                                  <div class="col-6 form-group">
+                                    {{ form_row(form.numTel ,{ 'label': 'Tel' }) }}
+                                  </div>
+
+
+                                  <div class="col-12 form-group">
+                                    <button class="button button-3d button-black m-0" id="register-form-submit" name="register-form-submit" value="register">Valider !</button>
+                                  </div>
+                                </div>
+                                {{ form_rest(form) }}
+                              {{ form_end(form2)}}
+                              {{ form_end(form) }}
+
+
+														<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
+															<i class="icon-facebook"></i>
+															<i class="icon-facebook"></i>
+														</a>
+														<a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
+															<i class="icon-twitter"></i>
+															<i class="icon-twitter"></i>
+														</a>
+														<a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
+															<i class="icon-gplus"></i>
+															<i class="icon-gplus"></i>
+														</a>
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+							</div>
+
+          	</div>
+
+          </div>
+        </div>
+      </section><!-- #content end -->
+{% endblock %}
+{% block javascripts %}
+<script>
+		jQuery(document).ready( function(){
+
+			let pricingResponsive = 0,
+				pricingRetina = 0,
+				pricingWebtype = 0,
+				pricingDesign = 0,
+				pricingPages = 0,
+				pricingCMS = 0,
+				pricingSEO = 1,
+				pricingGA = 0,
+				pricingUrgent = 0,
+				elementPrice = $("#website-cost-price"),
+				elementResponsive = $( 'input[name="website-cost-responsive"]' ),
+				elementRetina = $( 'input[name="website-cost-retina"]' ),
+				elementWebType = $( 'input[name="website-cost-type"]' ),
+				elementDesign = $( 'input[name="website-cost-design"]' ),
+				elementPages = $(".website-pages"),
+				elementCMS = $("input[name='website-cost-cms']"),
+				elementGA = $("input[name='website-cost-google-analytics']"),
+				elementUrgent = $("input[name='website-cost-before-30-days']"),
+				elementSEO = $(".website-seo");
+
+
+			elementResponsive.on( 'change', function(){
+				pricingResponsive = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementRetina.on( 'change', function(){
+				pricingRetina = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementWebType.on( 'change', function(){
+				pricingWebtype = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementDesign.on( 'change', function(){
+				pricingDesign = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementPages.ionRangeSlider({
+				min: 10,
+				max: 100,
+				from: 10,
+				step: 10,
+				max_postfix: "+",
+				onStart: function(data){
+					pricingPages = data.from;
+				}
+			});
+
+			elementPages.on( 'change', function(){
+				pricingPages = $(this).prop('value');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementCMS.on( 'change', function(){
+				pricingCMS = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementSEO.ionRangeSlider({
+				min: 0,
+				max: 210,
+				from: 0,
+				step: 30,
+				max_postfix: " Keywords",
+				onStart: function(data){
+					pricingSEO = data.from;
+				}
+			});
+
+			elementSEO.on( 'onStart change', function(){
+				pricingSEO = $(this).prop('value');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementGA.on( 'change', function(){
+				pricingGA = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementUrgent.on( 'change', function(){
+				pricingUrgent = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+
+			function calculatePrice( responsive, retina, webtype, design, pages, cms, seo, ga, urgent ) {
+				let TotalPriceValue = Number(responsive) + Number(retina) + Number(webtype) + Number(design) + ( Number(pages) * 100 ) + Number(cms) + ( Number(seo) * 100 ) + Number(ga) + Number(urgent);
+				jQuery('.responsive-value').html( '$'+pricingResponsive );
+				jQuery('.retina-value').html( '$'+pricingRetina );
+				jQuery('.website-type-value').html( '$'+pricingWebtype );
+				jQuery('.design-value').html( '$'+pricingDesign );
+				jQuery('.pages-value').html('$'+pricingPages * 100);
+				jQuery('.cms-value').html('$'+pricingCMS);
+				jQuery('.seo-value').html('$'+pricingSEO  * 100);
+				jQuery('.google-analytics-value').html('$'+pricingGA);
+				jQuery('.urgent-value').html('$'+pricingUrgent);
+				jQuery('.total-price').html( '$'+TotalPriceValue );
+				elementPrice.val( TotalPriceValue ).change();
+			}
+
+			$('#website-cost').on( 'formSubmitSuccess', function(){
+				$('.responsive-value, .retina-value, .website-type-value, .design-value, .pages-value, .cms-value, .google-analytics-value, .urgent-value, .total-price' ).html( '$0' );
+			});
+
+			tinymce.init({
+				selector: '#website-cost-message',
+				menubar: false,
+				setup: function(editor) {
+					editor.on('change', function(e) {
+						editor.save();
+					});
+				}
+			});
+
+		});
+
+
+	$('#cv-formation').click(function(){
+      // je recupère le numéro des futures champs que je vais creer
+      const index = +$('#widgets-counter').val();
+
+      // Je recupère le prototype des entrées
+      const tmpl =  $('#cv_formations').data('prototype').replace(/__name__/g, index);
+
+      //j'injecte ce code au sein de la div
+      $('#cv_formations').append(tmpl);
+
+      $('#widgets-counter').val(index + 1);
+
+      //je gére la suppression d'image
+      handleDeleteButtons();
+    });
+
+    function handleDeleteButtons(){
+      $('button[data-action="delete"]').click(function(){
+        const target = this.dataset.target;
+        $(target).remove();
+      });
+    }
+
+    function updateCounter(){
+      const count = +$('#cv_formations div.form-group').length;
+
+      $('#widgets-counter').val(count);
+    }
+
+    updateCounter();
+
+    handleDeleteButtons();
+</script>
+{% endblock %}

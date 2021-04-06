@@ -2,12 +2,14 @@
 
 namespace App\Form;
 
+use App\Form\ApplicationType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class EntrepriseType extends ApplicationType
+class EentrepriseType extends ApplicationType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -16,6 +18,7 @@ class EntrepriseType extends ApplicationType
         ->add('site',TextType::class, $this->getConfiguration("Site de l'entreprise"))
         ->add('addresse', TextType::class, $this->getConfiguration("Adresse"))
         ->add('description',TextareaType::class, $this->getConfiguration("Description détaillé"))
+        ->add('secte')
         ;
     }
 

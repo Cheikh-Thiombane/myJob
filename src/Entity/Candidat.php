@@ -33,11 +33,7 @@ class Candidat
      */
     private $picture;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateNaiss;
-
+    
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="candidat", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -64,7 +60,12 @@ class Candidat
      */
     private $critere;
 
-    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $dateNaiss;
+
+
 
     public function __construct()
     {
@@ -114,17 +115,7 @@ class Candidat
         return $this;
     }
 
-    public function getDateNaiss(): ?\DateTimeInterface
-    {
-        return $this->dateNaiss;
-    }
 
-    public function setDateNaiss(?\DateTimeInterface $dateNaiss): self
-    {
-        $this->dateNaiss = $dateNaiss;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -204,6 +195,18 @@ class Candidat
         }
 
         $this->critere = $critere;
+
+        return $this;
+    }
+
+    public function getDateNaiss(): ?string
+    {
+        return $this->dateNaiss;
+    }
+
+    public function setDateNaiss(?string $dateNaiss): self
+    {
+        $this->dateNaiss = $dateNaiss;
 
         return $this;
     }

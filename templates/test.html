@@ -51,3 +51,126 @@
 						<div class="video-overlay d-sm-block d-md-none" style="background: rgba(255,255,255,0.9);"></div>
 					</div>
 				</div>
+
+				<h3>Completez votre Cv</h3>
+												<!-- Posts
+												============================================= -->
+												{{ form_start(form) }}
+														<div class="form-row">
+															<div class="form-group col-md-12">
+																<div>
+																	<input id="cv_niveauEtude" class="radio-style " name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Qualification avant bac</label>
+																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac</label>
+																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+1</label>
+																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+2</label>
+																	<input id="cv_niveauEtude"  name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+3</label>
+																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+4</label>
+																	<input id="cv_niveauEtude" class="radio-style ml-2" name="cv[niveauEtude]" type="radio">
+																	<label for="cv_niveauEtude" class="checkbox-style-3-label">Bac+5 et plus</label>
+																</div>
+															</div>
+															<div class="form-group col-md-12">
+																{{ form_row(form.formations) }}
+															</div>
+
+														<div class="form-group col-md-12">
+																{% for niveauExperience in niveauExperiences %}
+																			<input type="radio" class="radio-style ml-2" name="secteur[]" id="" value="{{niveauExperience.id}}">
+																			{{niveauExperience.libelle}}
+															{% endfor %}
+															</div>
+															<div class="form-group col-md-12">
+															<h4>Experiences:</h4>
+																{{ form_widget(form.experiences) }}
+															</div>
+														</div>
+														{# <button type="submit" class="btn btn-primary">Sign in</button> #}
+												{{ form_end(form) }}
+
+												<table class="table table-bordered table-striped">
+												  <thead>
+													<tr>
+													  <th>Titre</th>
+													  <th>Etablissement</th>
+													  <th>Date Debut</th>
+													  <th>Date Fin</th>
+													</tr>
+												  </thead>
+												  <tbody>
+													<tr>
+														<td>
+															{{formation.titre}}
+														</td>
+													  <td>
+														<code>5/23/2021</code>
+													  </td>
+													  <td></td>
+													</tr>
+
+												  </tbody>
+												</table>
+
+												<div class="col-12 form-group">
+										<label>Sample File:</label>
+										<div class="file-input file-input-new">
+<div class="kv-upload-progress kv-hidden" style="display: none;"><div class="progress">
+    <div class="progress-bar bg-success progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+        0%
+     </div>
+</div></div><div class="clearfix"></div>
+<div class="input-group file-caption-main">
+  <div class="file-caption form-control kv-fileinput-caption" tabindex="500">
+  <span class="file-caption-icon"></span>
+  <input class="file-caption-name valid" placeholder="Select file ...">
+</div>
+<div class="input-group-btn input-group-append">
+      <button type="button" tabindex="500" title="Clear all unprocessed files" class="btn btn-danger fileinput-remove fileinput-remove-button"><i class="icon-trash-alt1"></i> </button>
+      <button type="button" tabindex="500" title="Abort ongoing upload" class="btn btn-default btn-secondary kv-hidden fileinput-cancel fileinput-cancel-button"><i class="glyphicon glyphicon-ban-circle"></i>  <span class="hidden-xs">Cancel</span></button>
+
+
+      <div tabindex="500" class="btn btn-secondary btn-file">  <span class="hidden-xs">Browse …</span><input type="file" id="freelance-quote-sample" name="freelance-quote-sample" class="valid" data-show-preview="false"></div>
+    </div>
+</div></div>
+									</div>
+
+
+
+
+
+		jQuery(document).ready( function(){
+			$(".price-range-slider").ionRangeSlider({
+				type: "double",
+				prefix: "$",
+				min: 200,
+				max: 10000,
+				step: 100,
+				max_postfix: "+",
+				input_values_separator: ' to '
+			});
+
+			tinymce.init({
+				selector: '#freelance-quote-additional-notes',
+				menubar: false,
+				setup: function(editor) {
+					editor.on('change', function(e) {
+						editor.save();
+					});
+				}
+			});
+
+			$("#freelance-quote-sample").fileinput({
+				browseClass: "btn btn-secondary",
+				browseIcon: "",
+				removeClass: "btn btn-danger",
+				removeLabel: "",
+				removeIcon: "<i class='icon-trash-alt1'></i>",
+				showUpload: false
+			});
+		})
+	

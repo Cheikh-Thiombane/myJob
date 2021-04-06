@@ -26,11 +26,6 @@ class Cv
     private $candidat;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $niveauEtude;
-
-    /**
      * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="cv", orphanRemoval=true)
      */
     private $experiences;
@@ -41,9 +36,19 @@ class Cv
     private $formations;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $competence;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=NiveauExperience::class, inversedBy="cvs")
      */
     private $niveauExperience;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=NiveauEtude::class, inversedBy="cvs")
+     */
+    private $niveauEtude;
 
     public function __construct()
     {
@@ -68,17 +73,7 @@ class Cv
         return $this;
     }
 
-    public function getNiveauEtude(): ?int
-    {
-        return $this->niveauEtude;
-    }
 
-    public function setNiveauEtude(int $niveauEtude): self
-    {
-        $this->niveauEtude = $niveauEtude;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Experience[]
@@ -140,14 +135,38 @@ class Cv
         return $this;
     }
 
-    public function getNiveauExperience(): ?int
+    public function getCompetence(): ?string
+    {
+        return $this->competence;
+    }
+
+    public function setCompetence(?string $competence): self
+    {
+        $this->competence = $competence;
+
+        return $this;
+    }
+
+    public function getNiveauExperience(): ?NiveauExperience
     {
         return $this->niveauExperience;
     }
 
-    public function setNiveauExperience(int $niveauExperience): self
+    public function setNiveauExperience(?NiveauExperience $niveauExperience): self
     {
         $this->niveauExperience = $niveauExperience;
+
+        return $this;
+    }
+
+    public function getNiveauEtude(): ?NiveauEtude
+    {
+        return $this->niveauEtude;
+    }
+
+    public function setNiveauEtude(?NiveauEtude $niveauEtude): self
+    {
+        $this->niveauEtude = $niveauEtude;
 
         return $this;
     }

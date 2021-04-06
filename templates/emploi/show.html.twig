@@ -1,0 +1,239 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}Hello EntrepriseController!{% endblock %}
+{% block stylesheets %}
+<style>
+
+		.demos-filter {
+			margin: 0;
+			text-align: left;
+            font-size: 12px;
+		}
+
+		.demos-filter li {
+			list-style: none;
+			margin: 10px 0px;
+		}
+
+		.demos-filter li a {
+			display: block;
+			border: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #444;
+		}
+
+		.demos-filter li a:hover,
+		.demos-filter li.activeFilter a { color: #1ABC9C; }
+
+		@media (max-width: 991px) {
+			.demos-filter { text-align: center; }
+
+			.demos-filter li {
+				float: left;
+				width: 33.3%;
+				padding: 0 20px;
+			}
+		}
+
+		@media (max-width: 767px) { .demos-filter li { width: 50%; } }
+
+		.tiny_bullet_slider .tp-bullet:before{content:" ";  position:absolute;  width:100%;  height:25px;  top:-12px;  left:0px;  background:transparent}#rev_slider_103_1 .uranus.tparrows{width:50px; height:50px; background:rgba(255,255,255,0)}#rev_slider_103_1 .uranus.tparrows:before{width:50px; height:50px; line-height:50px; font-size:40px; transition:all 0.3s;-webkit-transition:all 0.3s}#rev_slider_103_1 .uranus.tparrows:hover:before{opacity:0.75}.bullet-bar.tp-bullets{}.bullet-bar.tp-bullets:before{content:" ";position:absolute;width:100%;height:100%;background:transparent;padding:10px;margin-left:-10px;margin-top:-10px;box-sizing:content-box}.bullet-bar .tp-bullet{width:60px;height:3px;position:absolute;background:#aaa;  background:rgba(204,204,204,0.5);cursor:pointer;box-sizing:content-box}.bullet-bar .tp-bullet:hover,.bullet-bar .tp-bullet.selected{background:rgba(204,204,204,1)}.bullet-bar .tp-bullet-image{}.bullet-bar .tp-bullet-title{}
+
+</style>
+{% endblock %}
+{% block body %}
+
+    <section id="page-title" class="page-title-center">
+
+			<div class="container clearfix">
+				<h1>{{emploi.poste}}</h1>
+				<span>Nombre de poste: {{emploi.nbPoste}}</span>
+
+			</div>
+
+		</section>
+
+    <section id="content">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="row clearfix">
+            {# <img src="{{user.candidat.picture}}" class="alignleft img-circle img-thumbnail my-0" alt="Avatar" style="max-width: 84px;"> #}
+
+							<div class="row clearfix">
+
+              	<div class="col-md-10 float-center ml-6">
+
+                	<div class="clear"></div>
+										<div class="title-block">
+											<h2>Information Entreprise</h2>
+										</div>
+										<div class="content shadow bg-light border px-5 py-md-3">
+
+											<div>
+												<div class="heading-block">
+													<div class="row mt-5">
+														<div class="col-4">
+															<img src="{{entreprise.picture}}" class="border border-f5 border-dark " style="max-width : 90%" alt="" srcset="">
+														</div>
+														<div class="col-7">
+															<h3>{{entreprise.nom}}</h3>
+															<span class="before-heading color">{{entreprise.user.address}} &amp; {{entreprise.user.ville}}</span>
+														</div>
+													</div>
+												</div>
+
+												<div class="row col-mb-50">
+													<div class="col-lg-12 mb-4">
+															<div class="row">
+																<span class="col-6 h4">Site :</span>
+																<div class="col-6 h5 dark-color" style="width: 60%;">
+																	{{entreprise.site}}
+																</div>
+															</div>
+															<div class="row">
+															<div class="col-6 h4">Secteurs d'activités :</div>
+																	<div class="float-center col-6 h5 dark-color" style="width: 80%;">
+																		{% for secteur in entreprise.secteurActivite %}
+																			{{secteur}}
+																		{% endfor %}
+																	</div>
+															</div>
+													</div>
+
+													<div class="col-lg-12">
+													<div class="fancy-title title-bottom-border">
+														<h3>Description de l'entreprise</h3>
+													</div>
+													<div class="content">
+															<blockquote>
+																	{{entreprise.description | raw}}
+															</blockquote>
+
+													</div>
+
+														<a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
+															<i class="icon-facebook"></i>
+															<i class="icon-facebook"></i>
+														</a>
+														<a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
+															<i class="icon-twitter"></i>
+															<i class="icon-twitter"></i>
+														</a>
+														<a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
+															<i class="icon-gplus"></i>
+															<i class="icon-gplus"></i>
+														</a>
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+										<div class="mt-5"></div>
+										<div class="title-block">
+											<h2>Information Offre</h2>
+										</div>
+										<div class="content shadow bg-light border px-5 py-md-3">
+
+											<div>
+												<div class="row col-mb-50">
+													<div class="col-lg-12 mb-4">
+																<div class="fancy-title title-bottom-border">
+																<h3>Poste proposé : {{emploi.poste}} </h3>
+															</div>
+															<div class="row">
+																<div class="content">
+																	<blockquote>
+																			{{emploi.descriptionPoste | raw}}
+																	</blockquote>
+																</div>
+															</div>
+															<div class="fancy-title title-bottom-border">
+																<h3>Profile recherché : {{emploi.poste}}</h3>
+															</div>
+															<div class="row">
+																<div class="content">
+																	<blockquote>
+																			{{emploi.descriptionProfil | raw}}
+																	</blockquote>
+																</div>
+															</div>
+															<div class="fancy-title title-bottom-border">
+																<h3>Critére de Recherche : {{emploi.poste}}</h3>
+															</div>
+															<div class="row mt-5">
+																<span class="col-6 h4 ">Secteur d'activités :</span>
+																<div class="col-6  color" style="width: 60%;">
+																	{% for secteur in emploi.secteurActivites %}
+																				{{secteur}}
+																	{% endfor %}
+																</div>
+															</div>
+															<div class="row mt-3">
+																<span class="col-6 h4 ">Langues:</span>
+																<div class="col-6  color" style="width: 60%;">
+																	{% for langue in emploi.langues %}
+																				{{langue}}
+																	{% endfor %}
+																</div>
+															</div>
+															<div class="row mt-3">
+																<span class="col-6 h4">Metier :</span>
+																<div class="col-6  color" style="width: 60%;">
+																	{% for metier in emploi.metier %}
+																			{{metier}},
+																	{% endfor %}
+																</div>
+															</div>
+
+															<div class="row mt-3">
+																<span class="col-6 h4">Type de Contrat :</span>
+																	<div class="float-center col-6  color" style="width: 80%;">
+																	{% for contrat in emploi.typeContrat %}
+																			{{contrat}},
+																	{% endfor %}
+																	</div>
+															</div>
+															<div class="row mt-3">
+																<span class="col-6 h4">Salaire propose :</span>
+																	<div class="float-center col-6  color" style="width: 80%;">
+																			{{emploi.renumeration }}
+																	</div>
+															</div>
+															<div class="row mt-3">
+																<span class="col-6 h4">Région :</span>
+																	<div class="float-center col-6  color" style="width: 80%;">
+																			{% for region in emploi.region %}
+																					{{region }},
+																			{% endfor %}
+																	</div>
+															</div>
+														</div>
+																<div class="col-lg-12">
+																	<div class="fancy-title title-bottom-border">
+																		<h3>Nombre de poste : {{emploi.nbPoste}} </h3>
+																	</div>
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+									</div>
+
+									<div class="w-100 line d-block d-md-none"></div>
+								</div>
+							</div>
+					</div>
+					<div class="row center align-content-center">
+						<div class="col-11 float-center ">
+               {% set url = path('emploi_add', {'slug' : emploi.slug} ) %}
+							<button class="button button-large button-shadow button-dark button-circle mt-5 "><a href="{{ url }}">POSTULER</a></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+{% endblock %}

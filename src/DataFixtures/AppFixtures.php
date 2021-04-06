@@ -2,14 +2,24 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Candidat;
 use App\Entity\Cv;
+use Faker\Factory;
+use App\Entity\Role;
+use App\Entity\User;
+use App\Entity\Langue;
+use App\Entity\Metier;
+use App\Entity\Region;
+use App\Entity\Critere;
+use App\Entity\Candidat;
+use App\Entity\Formation;
 use App\Entity\Entreprise;
 use App\Entity\Experience;
-use App\Entity\Formation;
+use App\Entity\NiveauEtude;
 use App\Entity\OffreEmploi;
-use Faker\Factory;
-use App\Entity\User;
+use App\Entity\TypeContrat;
+use App\Entity\SecteurActivite;
+use App\Entity\NiveauExperience;
+use App\Repository\LangueRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -25,14 +35,20 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        //$repolangue = new LangueRepository();
         $faker = Factory::create('fr_FR');
         $faker_1 = Factory::create('en_US');
 
         //Nous gerons les users
         $users = [];
-        $schools = ['Institut superieur informatique', 'Ecole national d\'aviation',
-        'Institut Privé de Gestion (IPG)','Ecole des Hautes Etudes de Gestion ( H .E.G)','Institution Sainte Jeanne d’Arc',
-        'Institut de Formation et d’Assistance AFI','Institut Supérieur de Management ISM'];
+        $schools = [
+            'Institut superieur informatique',
+            'Ecole national d\'aviation',
+            'Institut Privé de Gestion (IPG)',
+            'Ecole des Hautes Etudes de Gestion ( H .E.G)',
+            'Institution Sainte Jeanne d’Arc',
+            'Institut de Formation et d’Assistance AFI',
+            'Institut Supérieur de Management ISM'];
         $entreprises = [
             'Caisse nationale de crédit agricole du Sénégal (CNCAS)',
             'Chemin de fer du Dakar-Niger',
@@ -62,7 +78,7 @@ class AppFixtures extends Fixture
             'Le Soleil',
             'Suneor (ex-SONACOS)',
         ];
-        $secteur_activites = [
+        $secteurActivites = [
             'Activités associatives',
             'Administration publique',
             'Aéronautique, navale',
@@ -158,148 +174,250 @@ class AppFixtures extends Fixture
             'Temps partiel',
             'Alternance ',
         ];
-        $langues = ['Francais','Anglais'];
+        $langues = [
+            'Arabe',
+            'Français',
+            'Anglais',
+            'Espagnol',
+            'Allemand',
+            'Italien',
+            'Afrikaans',
+            'Amharique',
+            'Arménien',
+            'Azéri',
+            'Bengalî',
+            'Berbère',
+            'Biélorusse',
+            'Birman',
+            'Bulgare',
+            'Catalan',
+            'Chinois',
+            'Coréen',
+            'Croate',
+            'Danois',
+            'Estonien',
+            'Finlandais',
+            'Géorgien',
+            'Grec',
+            'Hébreu',
+            'Hindi',
+            'Hongrois',
+            'Indonésien',
+            'Irlandais',
+            'Islandais',
+            'Japonais',
+            'Kazahk',
+            'Khmer',
+            'Kirghiz',
+            'Lao',
+            'Letton',
+            'Lituanien',
+            'Luxembourgeois',
+            'Macédonien',
+            'Malais',
+            'Mongol',
+            'Néerlandais',
+            'Népali',
+            'Norvégien',
+            'Ourdou',
+            'Ouzbek',
+            'Persan',
+            'Polonais',
+            'Portugais',
+            'Roumain',
+            'Russe',
+            'Serbe',
+            'Slovaque',
+            'Slovène',
+            'Suédois',
+            'Tadjik',
+            'Tamoul',
+            'Tchèque',
+            'Thaï',
+            'Turc',
+            'Turkmène',
+            'Ukrainien',
+            'Vietnamien',
+            'Bosnien',
+            'Divehi',
+            'Dzongkha ',
+        ];
+        $niveauExperiences = [
+            'Etudiant, jeune diplômé',
+            'Débutant < 2 ans',
+            'Expérience entre 2 ans et 5 ans',
+            'Expérience entre 5 ans et 10 ans',
+            'Expérience > 10 ans',
+        ];
+        $niveauEtudes = [
+            'Qualification avant bac',
+            'Bac',
+            'Bac+1',
+            'Bac+2',
+            'Bac+3',
+            'Bac+4',
+            'Bac+5 et plus',
+        ];
+
         $genres = ['male', 'female'];
         $types = ['candidat', 'entreprise'];
 
-        for ($i=1; $i <=10 ; $i++) {
+        /* foreach ($metiers as $key => $value) {
+            $metier = new Metier();
+
+            $metier->setLibele($value);
+            $manager->persist($metier);
+        };
+        foreach ($regions as $key => $value) {
+            $region = new Region();
+
+            $region->setLibele($value);
+            $manager->persist($region);
+        };
+        foreach ($typeContrats as $key => $value) {
+            $typeContrat = new TypeContrat();
+
+            $typeContrat->setLibelle($value);
+            $manager->persist($typeContrat);
+        };
+        foreach ($secteurActivites as $key => $value) {
+            $secteurActivite = new SecteurActivite();
+
+            $secteurActivite->setLibele($value);
+            $manager->persist($secteurActivite);
+        };
+        foreach ($langues as $key => $value) {
+            $langue = new Langue();
+
+            $langue->setLibele($value)
+                    ->setNiveau(100);
+            $manager->persist($langue);
+        };
+        foreach ($niveauExperiences as $key => $value) {
+            $niveauExperience = new NiveauExperience();
+
+            $niveauExperience->setLibelle($value);
+            $manager->persist($niveauExperience);
+        };
+        foreach ($niveauEtudes as $key => $value) {
+            $niveauEtude = new NiveauEtude();
+
+            $niveauEtude->setLibele($value);
+            $manager->persist($niveauEtude);
+        }; */
+
+          /* for ($i=1; $i < 5; $i++) {
             $user = new User();
-
-            $genre = $faker->randomElement($genres);
-
-            $picture = 'https://randomuser.me/api/portraits/';
-            $pictureId = $faker->numberBetween(1, 99) . '.jpg';
-
-            $picture .=  ($genre == 'male' ? 'men/' : 'women/') . $pictureId;
-            $civilite = 'Title'.($genre == 'male' ? 'Male' : 'Female');
-
             $hash = $this->encoder->encodePassword($user, 'password');
-
-            $user->setFirstName($faker->firstname)
-                ->setLastName($faker->lastname)
-                ->setEmail($faker->email)
-                ->setCivilite($faker->$civilite)
+            $user->setFirstName($faker->firstNameFemale)
+                ->setLastName($faker->lastName)
+                ->setNumTel($faker->phoneNumber)
                 ->setAddress($faker->address)
-                ->setVille($faker->city)
+                ->setEmail($faker->email)
+                ->setHash($hash)
+                ->setCivilite('Mrs')
                 ->setCodePostal($faker->postcode)
                 ->setPays('Sénégal')
-                ->setNumTel($faker->phoneNumber)
-                ->setHash($hash)
+                ->setVille($faker->randomElement($regions))
+                ->setNationalite('Sénégalais')
                 ;
-
-
-
-
             $type = $faker->randomElement($types);
+            //$type = 'candidat';
+            if ($type == 'candidat') {
+                $picture = 'https://randomuser.me/api/portraits/men/';
+                $pictureId = $faker->numberBetween(1, 99) . '.jpg';
 
-            if ($type == "candidat") {
-                $candidat = new Candidat();
+                $picture .=  $pictureId;
 
-                //$title = $faker->sentence();
-
-                $coverImage = $faker->imageUrl(500,300);
-                $introduction = $faker->paragraph(2);
-                $content = '<p>' . join('</p><p>', $faker->paragraphs(5)).'</p>';
-
-                //$user = $users[mt_rand(0, count($users) - 1)];
+                $candidat = new candidat();
 
                 $candidat->setUser($user)
-                    ->setPicture($picture)
-                    ->setDateNaiss($faker->dateTime($max = 'now', $timezone = null))
+                        ->setDateNaiss($faker->date($format = 'Y-m-d', $max = '1998-01-01'))
+                        ->setPicture($picture)
+
+                ;
+
+                $critere = new Critere();
+                $langue = new Langue();
+                //$langue_1 = $repolangue->find(2);
+                $critere->setCandidat($candidat)
+                ;
+                $cv = new Cv();
+
+                $cv->setCandidat($candidat)
+                ;
+                for ($i=1; $i <= mt_rand(1,3); $i++) {
+                    $formation = new Formation;
+                    $formation->setNomEcole($faker->randomElement($schools))
+                            ->setTitre($faker_1->bs)
+                            ->setDateDebut($faker->dateTime($format = 'Y-m-d', $max = 'now'))
+                            ->setDateFin($faker->dateTime($format = 'Y-m-d', $max = 'now'))
+                            ->setDescription($faker->paragraph(2))
+                            ->setCv($cv)
                     ;
+                    $manager->persist($formation);
+                }
+                for ($i=1; $i <=mt_rand(1,3); $i++) {
+                    $experience = new Experience;
+                    $experience->setEntreprise($faker->randomElement($entreprises))
+                            ->setPoste($faker->catchPhrase)
+                            ->setDateDebut($faker->dateTime($format = 'Y-m-d', $max = 'now'))
+                            ->setDateFin($faker->dateTime($format = 'Y-m-d', $max = 'now'))
+                            ->setDescription($faker->paragraph(2))
+                            ->setCv($cv)
 
-
-                        $cv = new Cv();
-
-
-
-                        $cv->setNiveauEtude(mt_rand(1, 5))
-                            ->setCandidat($candidat)
-                            ->setNiveauExperience(mt_rand(1, 5))
-                            ;
-
-
-                        for ($j=1; $j<= mt_rand(1, 4) ; $j++) {
-                            $formation = new Formation();
-
-                            $formation->setTitre($faker_1->bs)
-                                ->setNomEcole($faker->randomElement($schools))
-                                ->setDateDebut($faker->dateTime($max = 'now', $timezone = null))
-                                ->setDateFin($faker->dateTime($max = 'now', $timezone = null))
-                                ->setCv($cv)
-                                ;
-
-                            $manager->persist($formation);
-                        }
-                        for ($j=1; $j<= mt_rand(1, 4) ; $j++) {
-                            $experience = new Experience();
-
-                            $experience->setPoste($faker_1->bs)
-                                ->setEntreprise($faker->randomElement($entreprises))
-                                ->setDateDebut($faker->dateTime($max = 'now', $timezone = null))
-                                ->setDateFin($faker->dateTime($max = 'now', $timezone = null))
-                                ->setCv($cv);
-
-                            $manager->persist($experience);
-                        }
-                    // $product = new Product();
-
-                    $manager->persist($cv);
-                    $manager->persist($candidat);
+                    ;
+                    $manager->persist($experience);
+                }
+                $manager->persist($cv);
+                $manager->persist($critere);
+                $manager->persist($candidat);
             }else{
+
+                $picture = 'https://pigment.github.io/fake-logos/logos/medium/color/';
+                $pictureId = $faker->numberBetween(1, 12) . '.png';
+                $picture .=  $pictureId;
+
+
                 $entreprise = new Entreprise();
+                $entreprise->setNom($faker->randomElement($entreprises))
+                            ->setSite($faker->domainName)
+                            ->setUser($user)
+                            ->setDescription($faker->paragraph(mt_rand(2,3)))
+                            ->setPicture($picture)
+                            ->setCodePostal($faker->postcode)
+                            ->setPays('Sénégal')
+                            ->setVille($faker->randomElement($regions))
 
-                $title = $faker->sentence();
-
-                $coverImage = $faker->imageUrl(300,150);
-                $introduction = $faker->paragraph(2);
-                $content = '<p>' . join('</p><p>', $faker->paragraphs(5)).'</p>';
-
-
-                //$secAc2 = ['1' => $genre = $faker->randomElement($secAc),'2' =>$genre = $faker->randomElement($secAc) ];
-                $entreprise->setUser($user)
-                    ->setPicture($coverImage)
-                    ->setDescription($content)
-                    ->setNom($faker->randomElement($entreprises))
-                    ->setSecteurActivite([$faker->randomElement($secteur_activites, mt_rand(2,3))])
-                    ->setSite($faker->domainName)
-                    ;
-
-                for ($i=0; $i < mt_rand(0,10) ; $i++) {
+                ;
+                for ($i=0; $i <mt_rand(3,6) ; $i++) {
                     $offre = new OffreEmploi();
-                    $sec_0 = [];
-                    $sec_0  = $faker->randomElement($secteur_activites, mt_rand(2,4));
-                    $offre->setPoste($faker->sentence(6, true))
-                          ->setRegion($faker->randomElement($regions))
-                          ->setNbPoste(mt_rand(1,10))
-                          ->setSecteurActivite([$faker->randomElement($secteur_activites, mt_rand(2,4))])
-                          ->setTypeContrat($faker->randomElement($typeContrats))
-                          ->setDescriptionPoste($faker->paragraph(2))
-                          ->setDescriptionProfil($faker->paragraph(2))
-                          ->setNiveauExperience(mt_rand(0,4))
-                          ->setNiveauEtude(mt_rand(0,6))
-                          ->setLangues([$faker->randomElement($langues, mt_rand(1,2))])
-                          ->setMetier([$faker->randomElement($secteur_activites, mt_rand(1,4))])
-                          ->setEntreprise($entreprise)
-                          ->addCandidat($user->getCandidat())
+                    $offre->setEntreprise($entreprise)
+                            ->setPoste($faker->randomElement($metiers))
+                            ->setNbPoste(mt_rand(1,15))
+                            ->setDescriptionPoste($faker->sentence())
+                            ->setDescriptionProfil($faker->sentence())
                     ;
                     $manager->persist($offre);
                 }
-
-
-            $manager->persist($entreprise);
+                $manager->persist($entreprise);
             }
-
-            $manager->persist($user);
-            $users[] = $user;
-        }
-
-
-        // Nous gerons les cv
-
-
-
-
+        } */
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+        
+        $adminUser = new User();
+            $hash = $this->encoder->encodePassword($adminUser, 'password');
+            $adminUser->setFirstName('Cheikh Ahmed')
+                ->setLastName('Thiombane')
+                ->setNumTel('77 298 64 18')
+                ->setEmail('cheikhahmed@symfony.com')
+                ->setHash($hash)
+                ->setCivilite('Mrs')
+                ->addUserRole($adminRole)
+                ;
+        $manager->persist($adminUser);
         $manager->flush();
 
     }

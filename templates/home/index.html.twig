@@ -215,17 +215,17 @@
             <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget owl-loaded owl-drag" data-pagi="false" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
                 <div class="owl-stage-outer">
                     <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2260px;">
-                        {% for entreprise in entreprises | slice(0,5) %}
+                        {% for entreprise in entreprises | slice(0,8) %}
                           {% set url = path('entreprise_show', {'slug' : entreprise.slug} ) %}
-                            <div class="owl-item active" style="width: 262.5px; margin-right: 20px;">
+                            <div class="owl-item active" style="width: 162.5px; margin-right: 20px;">
                                 <div class="portfolio-item">
-                                    <div class="portfolio-image">
-                                        <a href="portfolio-single.html">
-                                            <img src=" {{entreprise.picture}} " alt="Open Imagination">
+                                    <div class="portfolio-image" style="position: relative; display:block;">
+                                        <a href="">
+                                            <img src=" {{entreprise.picture}} " style="min-height: 200.5px;" alt="Open Imagination">
                                         </a>
                                         <div class="bg-overlay">
                                             <div class="bg-overlay-content dark animated fadeOut" data-hover-animate="fadeIn" data-hover-speed="350" style="animation-duration: 350ms;">
-                                                <a href="/images/portfolio/full/1.jpg" class="overlay-trigger-icon bg-light text-dark animated fadeInUpSmall" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image" style="animation-duration: 350ms;"><i class="icon-line-plus"></i></a>
+                                                <a href="{{url}}" class="overlay-trigger-icon bg-light text-dark animated fadeInUpSmall" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image" style="animation-duration: 350ms;"><i class="icon-line-plus"></i></a>
                                                 <a href="{{ url }}" class="overlay-trigger-icon bg-light text-dark animated fadeInUpSmall" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" style="animation-duration: 350ms;"><i class="icon-line-ellipsis"></i></a>
                                             </div>
                                             <div class="bg-overlay-bg dark animated fadeOut" data-hover-animate="fadeIn" data-hover-speed="350" style="animation-duration: 350ms;"></div>
@@ -243,7 +243,7 @@
                     </div>
                 </div>
             </div>
-            <div class="owl-nav"><button type="button" role="presentation" class="owl-prev disabled"><i class="icon-angle-left"></i></button><button type="button" role="presentation" class="owl-next"><i class="icon-angle-right"></i></button></div><div class="owl-dots disabled"></div>
+            {# <div class="owl-nav"><button type="button" role="presentation" class="owl-prev disabled"><i class="icon-angle-left"></i></button><button type="button" role="presentation" class="owl-next"><i class="icon-angle-right"></i></button></div><div class="owl-dots disabled"></div> #}
             </div>
             <div class="fancy-title title-center title-border topmargin">
                 <h3>Nos offres recents</h3>
@@ -281,11 +281,12 @@
 					</div>
 				</div>
             </div>
-            <div id="section-about" class="section page-section m-0" style="background: #EEE  no-repeat center center; background-size: cover; padding: 100px 0" data-onepage-settings="{&quot;offset&quot;:0,&quot;speed&quot;:&quot;1250&quot;,&quot;easing&quot;:&quot;easeInOutExpo&quot;}">
 					<div class="container pl-lg-5">
 						<div class="row ">
-                        {% for candidat in candidats | slice(0, 6)%}
 
+                        {% for candidat in candidats | slice(26, 34) %}
+
+                        {% set url = path('candidat_show', {'slug' : candidat.slug} ) %}
 							<div class="col-md-5 mt-lg-5 border border-left  ml-5  clearfix">
 								<div class="heading-block">
 									<h2 class="font-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CV Num : {{candidat.id}} </font></font></h2>
@@ -294,36 +295,78 @@
 								<table class="table">
 									<tbody>
 										<tr>
-											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Civilité:</font></font></strong></td>
-											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.civilite}}</font></font></td>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Niveau d'étude:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                {% if candidat.cv is null %}
+                                                        ....
+                                                {% else %}
+                                                    {{candidat.cv.niveauEtude}}
+                                                {% endif %} </font></font>
+                                            </td>
 										</tr>
 										<tr>
-											<td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nom:</font></font></strong></td>
-											<td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.lastname}}</font></font></td>
+											<td ><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Formations:</font></font></strong></td>
+											<td ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
+										</tr>
+                                        {% if candidat.cv is null %}
+                                                ....
+                                        {% else %}
+                                        {% for formation in candidat.cv.formations %}
+										    <tr>
+                                                    <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{formation.dateDebut | slice(0, 4)}} - {{formation.dateFin | slice(0, 4)}}</font></font></strong></td>
+                                                    <td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                          <strong>{{formation.titre}}</strong><br>
+                                                    {% endfor %}
+                                                    </font></font>
+                                                </td>
+										    </tr>
+                                        {% endif %}
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Niveau d'experience:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                {% if candidat.cv is null %}
+                                                        ....
+                                                {% else %}
+                                                    {{candidat.cv.niveauExperience}}
+                                                {% endif %} </font></font>
+                                            </td>
 										</tr>
 										<tr>
-											<td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Prénom:</font></font></strong></td>
-											<td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.firstname}}</font></font></td>
+											<td ><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Experiences:</font></font></strong></td>
+											<td ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
 										</tr>
-										<tr>
-											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Date de naissance:</font></font></strong></td>
-											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.dateNaiss | format_date}}</font></font></td>
-										</tr>
-										<tr>
-											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">E-mail:</font></font></strong></td>
-											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.email}}</font></font></td>
-										</tr>
-										<tr>
-											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Téléphoner:</font></font></strong></td>
-											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.numTel}}</font></font></td>
-										</tr>
+                                        {% if candidat.cv is null %}
+                                                ....
+                                        {% else %}
+                                        {% for experience in candidat.cv.experiences %}
+										    <tr>
+                                                    <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{experience.dateDebut | slice(0, 4)}} - {{experience.dateFin | slice(0, 4)}}</font></font></strong></td>
+                                                    <td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                          <strong>{{experience.poste}}</strong><br>
+                                                    {% endfor %}
+                                                    </font></font>
+                                                </td>
+										    </tr>
+                                        {% endif %}
 										<tr>
 											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Secteurs d'activité:</font></font></strong></td>
 											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                                                 {% if candidat.critere is null %}
                                                         ....
                                                 {% else %}
-                                                {{candidat.critere.secteurActivite}}
+                                                    {% for secteur in candidat.critere.secteurActivites %}
+                                                        {{secteur}}
+                                                    {% endfor %}
+                                                {% endif %} </font></font>
+                                            </td>
+										</tr>
+										<tr>
+											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Métiers:</font></font></strong></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                {% if candidat.critere is null %}
+                                                        ....
+                                                {% else %}
+                                                    {{candidat.critere.metier}}
                                                 {% endif %} </font></font>
                                             </td>
 										</tr>
@@ -333,25 +376,25 @@
                                                 {% if candidat.critere is null %}
                                                         ....
                                                 {% else %}
-                                                {{candidat.critere.langues}}
+                                                {% for langue in candidat.critere.langues %}
+                                                        {{langue}}
+                                                    {% endfor %}
                                                 {% endif %} </font></font>
                                             </td>
 										</tr>
 										<tr>
 											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nationalité:</font></font></strong></td>
-											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">australien</font></font></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.nationalite}}</font></font></td>
 										</tr>
 									</tbody>
 								</table>
-								<a href="{{ path('candidat') }}" class="button button-large button-border button-black button-dark ml-0"><i class="icon-line-cloud-download"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Voir le CV</font></font></a>
+								<a href="{{ url }}" class="button button-large button-border button-black button-dark ml-0"><i class="icon-line-cloud-download"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Voir le CV</font></font></a>
 							</div>
+
                         {% endfor %}
 						</div>
 					</div>
-					<div class="video-wrap">
-						<div class="video-overlay d-sm-block d-md-none" style="background: rgba(255,255,255,0.9);"></div>
-					</div>
-				</div>
+
         </section>
 
 {% endblock %}

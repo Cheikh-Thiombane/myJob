@@ -236,8 +236,8 @@
               <div>
                 <div class="heading-block">
 									<div class="row mt-5">
-										<div class="col-5">
-											<img src="{{entreprise.picture}}" class="border border-f5 border-dark " alt="" srcset="">
+										<div class="col-4">
+											<img src="{{entreprise.picture}}" class="border border-f5 border-dark " style="max-width : 90%" alt="" srcset="">
 										</div>
 										<div class="col-7">
 											<h3>{{entreprise.nom}}</h3>
@@ -248,6 +248,12 @@
 
                 <div class="row col-mb-50">
                   <div class="col-lg-12 mb-4">
+                      <div class="row">
+                        <span class="col-6 h4">Site :</span>
+                        <div class="col-6 h5 dark-color" style="width: 60%;">
+                          {{user.entreprise.site}}
+                        </div>
+                      </div>
                       <div class="row">
                         <span class="col-6 h4">Ville :</span>
                         <div class="col-6 h5 dark-color" style="width: 60%;">
@@ -260,7 +266,6 @@
                           {{user.pays}}
                         </div>
                       </div>
-
                       <div class="row">
                       <div class="col-6 h4">Secteurs d'activités :</div>
                           <div class="float-center col-6 h5 dark-color" style="width: 80%;">
@@ -272,6 +277,9 @@
                   </div>
 
                   <div class="col-lg-12">
+									<div class="fancy-title title-bottom-border">
+										<h3>Description de l'entreprise</h3>
+									</div>
                   <div class="content">
                       <blockquote>
                           {{entreprise.description | raw}}

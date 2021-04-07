@@ -3,13 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\OffreType;
 use App\Entity\Entreprise;
+use App\Entity\OffreEmploi;
 use App\Form\EntrepriseType;
 use App\Form\EditEntrepriseType;
+use App\Repository\CandidatRepository;
+use App\Repository\CvRepository;
 use App\Repository\UserRepository;
+use App\Repository\LangueRepository;
+use App\Repository\MetierRepository;
+use App\Repository\RegionRepository;
 use App\Repository\EntrepriseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NiveauEtudeRepository;
+use App\Repository\OffreEmploiRepository;
+use App\Repository\TypeContratRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\SecteurActiviteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\NiveauExperienceRepository;
@@ -199,6 +209,120 @@ class EntrepriseController extends AbstractController
             'entreprise' => $entreprise,
             'user' => $user,
 
+        ]);
+    }
+
+    #[Route('/entreprise/offres', name:'entreprise_offres')]
+    public function entrepriseOffres(Request $request, EntityManagerInterface $manager)
+    {
+        $offre = new OffreEmploi();
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+
+        $form = $this->createForm(OffreType::class, $offre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $manager->persist($offre);
+            $manager->flush();
+
+            $this->addFlash('success',
+            "L'annonce <strong>{$offre->getPoste()}</strong> a bien été enregistrée !!");
+
+        }
+
+        return $this->render('entreprise/entrepriseOffre.html.twig', [
+            'entreprise' => $entreprise,
+            'ville' => '',
+            'pays' => '',
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+
+    }
+    #[Route('/entreprise/offres/{id}/edit', name:'entreprise_offres_edit')]
+    public function entrepriseOffresEdit(OffreEmploi $offre,Request $request, EntityManagerInterface $manager)
+    {
+
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+
+
+        $form = $this->createForm(OffreType::class, $offre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $manager->persist($offre);
+            $manager->flush();
+
+            $this->addFlash('success',
+            "L'annonce <strong>{$offre->getPoste()}</strong> a bien été enregistrée !!");
+
+            return $this->redirectToRoute('entreprise_offres');
+
+        }
+
+        return $this->render('entreprise/entrepriseOffreEdit.html.twig', [
+            'entreprise' => $entreprise,
+            'ville' => '',
+            'pays' => '',
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+
+    }
+    #[Route('/entreprise/offres/{id}/view', name:'entreprise_offres_view')]
+    public function entrepriseOffresView(OffreEmploi $offre,Request $request, EntityManagerInterface $manager)
+    {
+
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+
+        $form = $this->createForm(OffreType::class, $offre);
+
+        return $this->render('entreprise/entrepriseOffreShow.html.twig', [
+            'entreprise' => $entreprise,
+            'ville' => '',
+            'pays' => '',
+            'user' => $user,
+            'form' => $form->createView(),
+            'id' => $offre->getId(),
+            'offre'=> $offre
+        ]);
+
+    }
+    #[Route('/entreprise/offres/{id}/delete', name:'entreprise_offres_delete')]
+    public function entrepriseOffresDelete(OffreEmploi $offre,Request $request, EntityManagerInterface $manager)
+    {
+        $manager->remove($offre);
+        $manager->flush();
+        return $this->redirectToRoute('entreprise_offres');
+    }
+    #[Route('/cv_view', name: 'cv_view')]
+    public function cv_view(PaginatorInterface $paginator,CandidatRepository $repo,CvRepository $repoC, SecteurActiviteRepository $repoSec, MetierRepository $repoM, RegionRepository $repoR,
+    TypeContratRepository $repoT, LangueRepository $repoL,NiveauEtudeRepository $repoNe, NiveauExperienceRepository $repoNex, Request $request )
+    {
+
+        $candidats = $repo->findAll();
+
+        $candidatsP = $paginator->paginate(
+            $candidats, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            4 // Nombre de résultats par page
+        );
+
+        return $this->render('candidat/index.html.twig', [
+            'candidats' => $candidats,
+            'candidatsP' => $candidatsP,
+            'secteur_activites' => $repoSec->findAll(),
+            'metiers' => $repoM->findAll(),
+            'regions' => $repoR->findAll(),
+            'type_contrats' => $repoT->findAll(),
+            'langues' => $repoL->findAll(),
+            'experiences' => $repoNex->findAll(),
+            'etudes' => $repoNe->findAll(),
         ]);
     }
 }

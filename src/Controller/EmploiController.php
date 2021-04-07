@@ -5,155 +5,49 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Entreprise;
 use App\Entity\OffreEmploi;
+use App\Repository\LangueRepository;
+use App\Repository\MetierRepository;
+use App\Repository\RegionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NiveauEtudeRepository;
 use App\Repository\OffreEmploiRepository;
-
+use App\Repository\TypeContratRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\SecteurActiviteRepository;
+use App\Repository\NiveauExperienceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class EmploiController extends AbstractController
 {
 
     #[Route('/emploi', name: 'emploi')]
-    public function emploi(OffreEmploiRepository $repoO)
+    public function emploi(PaginatorInterface $paginator,OffreEmploiRepository $repoO, SecteurActiviteRepository $repoSec, MetierRepository $repoM, RegionRepository $repoR,
+    TypeContratRepository $repoT, LangueRepository $repoL,NiveauEtudeRepository $repoNe, NiveauExperienceRepository $repoNex, Request $request )
     {
+        
         $offreEmplois = $repoO->findAll();
-        $emplois = [
-            'Caisse nationale de crédit agricole du Sénégal (CNCAS)',
-            'Chemin de fer du Dakar-Niger',
-            'Compagnie bancaire de l\'Afrique occidentale (CBAO)',
-            'Consortium d\'emplois (CDE)',
-            'Compagnie sucrière sénégalaise (CSS)',
-            'Compagnie sénégalaise des phosphates de Taïba (CSPT)',
-            'Crédit du Sénégal (CDS) (ex Crédit Lyonnais Sénégal)',
-            'Crédit lyonnais Sénégal (CLS)Caisse nationale de crédit agricole du Sénégal (CNCAS)',
-            'Chemin de fer du Dakar-Niger',
-            'Compagnie bancaire de l\'Afrique occidentale (CBAO)',
-            'Consortium d\'emplois (CDE)',
-            'Compagnie sucrière sénégalaise (CSS)',
-            'Compagnie sénégalaise des phosphates de Taïba (CSPT)',
-            'Crédit du Sénégal (CDS) (ex Crédit Lyonnais Sénégal)',
-            'Crédit lyonnais Sénégal (CLS)',
-            'Senbus Industries',
-            'Sénégalaise des eaux (SDE)',
-            'Shell Sénégal',
-            'Société africaine de raffinage (SAR)',
-            'Société des brasseries de l\'Ouest africain (SOBOA)',
-            'Société générale de banques au Sénégal (SGBS)',
-            'Société nationale des conserveries du Sénégal (SNCDS)',
-            'Société nationale d\'électricité du Sénégal (Senelec)',
-            'Société nationale des télécommunications (Sonatel-Orange)',
-            'Sococim',
-            'Le Soleil',
-            'Suneor (ex-SONACOS)',
-        ];
-        $secteur_activites = [
-            'Activités associatives',
-            'Administration publique',
-            'Aéronautique, navale',
-            'Agriculture, pêche, aquaculture',
-            'Agroalimentaire',
-            'Ameublement, décoration',
-            'Automobile, matériels de transport, réparation',
-            'Banque, assurance, finances',
-            'BTP, construction',
-            'Centres d´appel, hotline, call center',
-            'Chimie, pétrochimie, matières premières',
-            'Conseil, audit, comptabilité',
-            'Distribution, vente, commerce de gros',
-            'Édition, imprimerie',
-            'Éducation, formation',
-            'Electricité, eau, gaz, nucléaire, énergie',
-            'Environnement, recyclage',
-            'Equip. électriques, électroniques, optiques, précision',
-            'Equipements mécaniques, machines',
-            'Espaces verts, forêts, chasse',
-            'Évènementiel, hôte(sse), accueil',
-            'Hôtellerie, restauration',
-            'Immobilier, architecture, urbanisme',
-            'Import, export',
-            'Industrie pharmaceutique',
-            'Industrie, production, fabrication, autres',
-            'Informatique, SSII, Internet',
-            'Ingénierie, études développement',
-            'Intérim, recrutement',
-            'Location',
-            'Luxe, cosmétiques',
-            'Maintenance, entretien, service après vente',
-            'Manutention',
-            'Marketing, communication, médias',
-            'Métallurgie, sidérurgie',
-            'Nettoyage, sécurité, surveillance',
-            'Papier, bois, caoutchouc, plastique, verre, tabac',
-            'Produits de grande consommation',
-            'Qualité, méthodes',
-            'Recherche et développement',
-            'Santé, pharmacie, hôpitaux, équipements médicaux',
-            'Secrétariat',
-            'Services aéroportuaires et maritimes',
-            'Services autres',
-            'Services collectifs et sociaux, services à la personne',
-            'Sport, action culturelle et sociale',
-            'Télécom',
-            'Textile, habillement, cuir, chaussures',
-            'Tourisme, loisirs',
-            'Transports, logistique, services postaux',
-        ];
-        $metiers = [
-            'Achats',
-            'Commercial, vente',
-            'Gestion, comptabilité, finance',
-            'Informatique, nouvelles technologies',
-            'Juridique',
-            'Management, direction générale',
-            'Marketing, communication',
-            'Métiers de la santé et du social',
-            'Métiers des services',
-            'Métiers du BTP',
-            'Production, maintenance, qualité',
-            'R&D, gestion de projets',
-            'RH, formation',
-            'Secretariat, assistanat',
-            'Tourisme, hôtellerie, restauration',
-            'Transport, logistique',
-        ];
-        $regions = [
-            'Dakar',
-            'Diourbel',
-            'Fatick',
-            'Kaffrine',
-            'Kaolack',
-            'Kédougou',
-            'Kolda',
-            'Louga',
-            'Matam',
-            'Saint-Louis',
-            'Sédhiou',
-            'Tambacounda',
-            'Thiès',
-            'Ziguinchor',
-            'International ',
-        ];
-        $typeContrats = [
-            'CDD',
-            'CDI',
-            'Stage',
-            'Intérim',
-            'Freelance',
-            'Temps partiel',
-            'Alternance ',
-        ];
-        $langues = ['Francais','Anglais'];
+
+        $offreEmploisP = $paginator->paginate(
+            $offreEmplois, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            10 // Nombre de résultats par page
+        );
 
         return $this->render('emploi/index.html.twig', [
-            'secteur_activites' => $secteur_activites,
-            'metiers' => $metiers,
-            'regions' => $regions,
-            'type_contrats' => $typeContrats,
-            'offre_emplois' => $offreEmplois
+            'offre_emplois' => $offreEmplois,
+            'offre_emploisP' => $offreEmploisP,
+            'secteur_activites' => $repoSec->findAll(),
+            'metiers' => $repoM->findAll(),
+            'regions' => $repoR->findAll(),
+            'type_contrats' => $repoT->findAll(),
+            'langues' => $repoL->findAll(),
+            'experiences' => $repoNex->findAll(),
+            'etudes' => $repoNe->findAll(),
         ]);
     }
 

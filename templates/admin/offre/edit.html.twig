@@ -1,0 +1,308 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} Modification de l'annonce numéro {{offre.id}} {% endblock %}
+
+{% block body %}
+
+      <div class="main-content-wrap sidenav-open d-flex flex-column">
+        <div class="breadcrumb">
+                <h1>Basic</h1>
+                <ul>
+                    <li><a href="">Form</a></li>
+                    <li>Basic</li>
+                </ul>
+            </div>
+
+            <div class="separator-breadcrumb border-top"></div>
+
+            <div class="row">
+                  <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-title mb-3">Edition Offres</div>
+                            {{ form_start(form) }}
+                                <div class="row">
+                                    <div class="col-md-5 form-group mb-3">
+                                        {{ form_label(form.poste) }}
+                                        {{ form_widget(form.poste, {'attr' :{'class' : 'form-control form-control-rounded',
+                                                            }}) }}
+                                    </div>
+
+                                    <div class="col-md-3 form-group mb-3">
+                                        {{ form_label(form.nbPoste) }}
+                                        {{ form_widget(form.nbPoste, {'attr' :{'class' : 'form-control form-control-rounded',
+                                                            }}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                        {{ form_label(form.endDate) }}
+                                        {{ form_widget(form.endDate, { 'label': 'Date de naissance','attr' :{'class' : 'form-control form-control-rounded datepicker valid'} }) }}
+                                    </div>
+
+                                    <div class="col-md-12 form-group mb-3">
+                                        {{ form_label(form.descriptionPoste) }}
+                                        {{ form_widget(form.descriptionPoste, {'attr' :{'class' : 'form-control form-control-rounded',
+                                                            }}) }}
+                                    </div>
+
+                                    <div class="col-md-12 form-group mb-3">
+                                        {{ form_label(form.descriptionProfil) }}
+                                        {{ form_widget(form.descriptionProfil, {'attr' :{'class' : 'form-control form-control-rounded',
+                                                            }}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                        {{ form_label(form.secteurActivites) }}
+                                        {{ form_widget(form.secteurActivites, {'attr' :{'class' : 'form-control form-control-rounded selectpicker',
+                                                            'data-width' : '400px',
+                                                            'data-max-options': '5'}}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                       {{ form_label(form.metier) }}
+                                        {{ form_widget(form.metier, {'attr' :{'class' : 'form-control form-control-rounded selectpicker',
+                                                            'data-width' : '400px',
+                                                            'data-max-options': '5'}}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                        {{ form_label(form.region) }}
+                                        {{ form_widget(form.region, {'attr' :{'class' : 'form-control form-control-rounded selectpicker',
+                                                            'data-width' : '400px',
+                                                            'data-max-options': '5'}}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                        {{ form_label(form.langues) }}
+                                        {{ form_widget(form.langues, {'attr' :{'class' : 'form-control form-control-rounded selectpicker',
+                                                            'data-width' : '400px',
+                                                            'data-max-options': '5'}}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                        {{ form_label(form.typeContrat) }}
+                                        {{ form_widget(form.typeContrat, {'attr' :{'class' : 'form-control  form-control-rounded selectpicker',
+                                                            'data-width' : '400px',
+                                                            'data-max-options': '5'}}) }}
+                                    </div>
+
+                                    <div class="col-md-4 form-group mb-3">
+                                        {{ form_label(form.renumeration) }}
+                                        {{ form_widget(form.renumeration, {'attr' :{'class' : 'form-control  form-control-rounded ',
+                                                            }}) }}
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+
+
+
+		jQuery(document).ready( function(){
+
+			let pricingResponsive = 0,
+				pricingRetina = 0,
+				pricingWebtype = 0,
+				pricingDesign = 0,
+				pricingPages = 0,
+				pricingCMS = 0,
+				pricingSEO = 1,
+				pricingGA = 0,
+				pricingUrgent = 0,
+				elementPrice = $("#website-cost-price"),
+				elementResponsive = $( 'input[name="website-cost-responsive"]' ),
+				elementRetina = $( 'input[name="website-cost-retina"]' ),
+				elementWebType = $( 'input[name="website-cost-type"]' ),
+				elementDesign = $( 'input[name="website-cost-design"]' ),
+				elementPages = $(".website-pages"),
+				elementCMS = $("input[name='website-cost-cms']"),
+				elementGA = $("input[name='website-cost-google-analytics']"),
+				elementUrgent = $("input[name='website-cost-before-30-days']"),
+				elementSEO = $(".website-seo");
+         $('.datepicker').datepicker({
+                        autoclose: true
+                    });
+
+                    $('#feedback-form').on( 'formSubmitSuccess', function(){
+                        $('.feedback-form-success-modal').magnificPopup('open');
+                    });
+
+			elementResponsive.on( 'change', function(){
+				pricingResponsive = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementRetina.on( 'change', function(){
+				pricingRetina = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementWebType.on( 'change', function(){
+				pricingWebtype = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementDesign.on( 'change', function(){
+				pricingDesign = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementPages.ionRangeSlider({
+				min: 10,
+				max: 100,
+				from: 10,
+				step: 10,
+				max_postfix: "+",
+				onStart: function(data){
+					pricingPages = data.from;
+				}
+			});
+
+			elementPages.on( 'change', function(){
+				pricingPages = $(this).prop('value');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementCMS.on( 'change', function(){
+				pricingCMS = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementSEO.ionRangeSlider({
+				min: 0,
+				max: 210,
+				from: 0,
+				step: 30,
+				max_postfix: " Keywords",
+				onStart: function(data){
+					pricingSEO = data.from;
+				}
+			});
+
+			elementSEO.on( 'onStart change', function(){
+				pricingSEO = $(this).prop('value');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementGA.on( 'change', function(){
+				pricingGA = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			elementUrgent.on( 'change', function(){
+				pricingUrgent = $(this).attr('data-price');
+				calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+			});
+
+			calculatePrice( pricingResponsive, pricingRetina, pricingWebtype, pricingDesign, pricingPages, pricingCMS, pricingSEO, pricingGA, pricingUrgent );
+
+			function calculatePrice( responsive, retina, webtype, design, pages, cms, seo, ga, urgent ) {
+				let TotalPriceValue = Number(responsive) + Number(retina) + Number(webtype) + Number(design) + ( Number(pages) * 100 ) + Number(cms) + ( Number(seo) * 100 ) + Number(ga) + Number(urgent);
+				jQuery('.responsive-value').html( '$'+pricingResponsive );
+				jQuery('.retina-value').html( '$'+pricingRetina );
+				jQuery('.website-type-value').html( '$'+pricingWebtype );
+				jQuery('.design-value').html( '$'+pricingDesign );
+				jQuery('.pages-value').html('$'+pricingPages * 100);
+				jQuery('.cms-value').html('$'+pricingCMS);
+				jQuery('.seo-value').html('$'+pricingSEO  * 100);
+				jQuery('.google-analytics-value').html('$'+pricingGA);
+				jQuery('.urgent-value').html('$'+pricingUrgent);
+				jQuery('.total-price').html( '$'+TotalPriceValue );
+				elementPrice.val( TotalPriceValue ).change();
+			}
+
+			$('#website-cost').on( 'formSubmitSuccess', function(){
+				$('.responsive-value, .retina-value, .website-type-value, .design-value, .pages-value, .cms-value, .google-analytics-value, .urgent-value, .total-price' ).html( '$0' );
+			});
+
+			tinymce.init({
+				selector: '#website-cost-message',
+				menubar: false,
+				setup: function(editor) {
+					editor.on('change', function(e) {
+						editor.save();
+					});
+				}
+			});
+      $(".freelance-quote-sample").fileinput({
+				browseClass: "btn btn-secondary",
+				browseIcon: "",
+				removeClass: "btn btn-danger required",
+				removeLabel: "",
+				removeIcon: "<i class='icon-trash-alt1'></i>",
+				showUpload: false
+			});
+      $('.freelance-quote-sample').removeAttr('required');
+
+		});
+
+
+	$('#cv-formation').click(function(){
+      // je recupère le numéro des futures champs que je vais creer
+      const index = +$('#widgets-counter').val();
+
+      // Je recupère le prototype des entrées
+      const tmpl =  $('#cv_formations').data('prototype').replace(/__name__/g, index);
+
+      //j'injecte ce code au sein de la div
+      $('#cv_formations').append(tmpl);
+
+      $('#widgets-counter').val(index + 1);
+
+      //je gére la suppression d'image
+      handleDeleteButtons();
+    });
+
+    function updateCounterFormation(){
+      const count = +$('#cv_formations div.form-group').length;
+
+      $('#widgets-counter').val(count);
+    }
+
+	$('#cv-experience').click(function(){
+      // je recupère le numéro des futures champs que je vais creer
+      const index = +$('#widgets-counter_1').val();
+
+      // Je recupère le prototype des entrées
+      const tmpl =  $('#cv_experiences').data('prototype').replace(/__name__/g, index);
+
+      //j'injecte ce code au sein de la div
+      $('#cv_experiences').append(tmpl);
+
+      $('#widgets-counter_1').val(index + 1);
+
+      //je gére la suppression d'image
+      handleDeleteButtons();
+    });
+
+    function updateCounterExperience(){
+      const count = +$('#cv_experiences div.form-group').length;
+
+      $('#widgets-counter_1').val(count);
+    }
+
+    function handleDeleteButtons(){
+      $('button[data-action="delete"]').click(function(){
+        const target = this.dataset.target;
+        $(target).remove();
+      });
+    }
+
+
+    updateCounterFormation();
+    updateCounterExperience();
+
+    handleDeleteButtons();
+</script>
+{% endblock %}

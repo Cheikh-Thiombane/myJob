@@ -86,36 +86,54 @@
 						<div class="accordion-content clearfix">
 
 
-							{{ form_start(form2,{'attr' :{'class' : 'row mb-0'}}) }}
-									<div class="col-6 form-group">
-										{{ form_row(form2.nom ,{ 'label': 'Nom de l\'entreprise' }) }}
-									</div>
-									<div class="col-6 form-group">
-										{{ form_row(form2.site ,{ 'label': 'Site Intenet' }) }}
-									</div>
-									<div class="col-4 form-group">
-										{{ form_row(form2.ville ,{ 'label': 'ville' }) }}
-									</div>
-									<div class="col-4 form-group">
-										{{ form_row(form2.pays ,{ 'label': 'Pays' }) }}
-									</div>
-									<div class="col-4 form-group">
-										{{ form_row(form2.codePostal ,{ 'label': 'Code Postal' }) }}
-									</div>
-								<div class="col-12 form-group">
-										{{ form_row(form2.description ,{ 'label': 'Description de l\'entreprise' }) }}
-								</div>
-								<div class="col-12">
-									{{ form_label(form2.secteurActivite) }}
-								</div>
-								{% for secteur in form2.secteurActivite %}
-                    <div class="col-6 form-group">
-                      {{ form_widget(secteur)  }}
-                      {{ form_label(secteur ) }}
-                    </div>
-                  {% endfor %}
+							<div class="row" style="background-color: #F5F5F5;">
+                        <div class="clear"></div>
+                            <div class="title-block mt-3">
+                              <h2>Information Entreprise</h2>
+                            </div>
+                            <div class="content shadow bg-light border px-5 py-md-3">
+                      <div>
 
-									
+                                {{form_start(form2,{'attr' :{'class' : 'row mb-0'}}) }}
+                          <div class="col-6 form-group">
+                            {{ form_row(form2.nom ,{ 'label': 'Nom de l\'entreprise' }) }}
+                          </div>
+                          <div class="col-6 form-group">
+                            {{ form_row(form2.site ,{ 'label': 'Site Intenet' }) }}
+                          </div>
+                          <div class="col-4 form-group">
+                            {{ form_row(form2.ville ,{ 'label': 'ville' }) }}
+                          </div>
+                          <div class="col-4 form-group">
+                            {{ form_row(form2.pays ,{ 'label': 'Pays' }) }}
+                          </div>
+                          <div class="col-4 form-group">
+                            {{ form_row(form2.codePostal ,{ 'label': 'Code Postal' }) }}
+                          </div>
+                        <div class="col-12 form-group">
+                            {{ form_row(form2.description ,{ 'label': 'Description de l\'entreprise' }) }}
+                        </div>
+                        <div class="col-12">
+                          {{ form_label(form2.secteurActivite) }}
+                        </div>
+                        {% for secteur in form2.secteurActivite %}
+                            <div class="col-6 form-group">
+                              {{ form_widget(secteur)  }}
+                              {{ form_label(secteur ) }}
+                            </div>
+                          {% endfor %}
+											</div>
+
+										</div>
+										<div class="mt-6"></div>
+										<div class="title-block mt-3">
+											<h2>Cordonné de contact</h2>
+										</div>
+												<div class="content shadow bg-light border px-5 py-md-3">
+
+											<div>
+
+
 								{{ form_start(form,{'attr' :{'class' : 'row mb-0'}}) }}
 								<div class="row mt-6">
 									<div class="col-3 form-group">
@@ -150,6 +168,7 @@
 								{{ form_rest(form) }}
 							{{ form_end(form2)}}
 							{{ form_end(form) }}
+							</div>
 						</div>
 
 					</div>

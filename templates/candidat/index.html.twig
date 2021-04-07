@@ -1,7 +1,245 @@
-{% extends 'base.html.twig' %}
+{% extends '/base.html.twig' %}
 
-{% block title %}Hello CandidatController!{% endblock %}
+{% block title %}Hello EntrepriseController!{% endblock %}
+{% block stylesheets %}
+    	<style>
 
+		.demos-filter {
+			margin: 0;
+			text-align: left;
+            font-size: 12px;
+		}
+
+		.demos-filter li {
+			list-style: none;
+			margin: 10px 0px;
+		}
+
+		.demos-filter li a {
+			display: block;
+			border: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #444;
+		}
+
+		.demos-filter li a:hover,
+		.demos-filter li.activeFilter a { color: #1ABC9C; }
+
+		@media (max-width: 991px) {
+			.demos-filter { text-align: center; }
+
+			.demos-filter li {
+				float: left;
+				width: 33.3%;
+				padding: 0 20px;
+			}
+		}
+
+		@media (max-width: 767px) { .demos-filter li { width: 50%; } }
+
+		.tiny_bullet_slider .tp-bullet:before{content:" ";  position:absolute;  width:100%;  height:25px;  top:-12px;  left:0px;  background:transparent}#rev_slider_103_1 .uranus.tparrows{width:50px; height:50px; background:rgba(255,255,255,0)}#rev_slider_103_1 .uranus.tparrows:before{width:50px; height:50px; line-height:50px; font-size:40px; transition:all 0.3s;-webkit-transition:all 0.3s}#rev_slider_103_1 .uranus.tparrows:hover:before{opacity:0.75}.bullet-bar.tp-bullets{}.bullet-bar.tp-bullets:before{content:" ";position:absolute;width:100%;height:100%;background:transparent;padding:10px;margin-left:-10px;margin-top:-10px;box-sizing:content-box}.bullet-bar .tp-bullet{width:60px;height:3px;position:absolute;background:#aaa;  background:rgba(204,204,204,0.5);cursor:pointer;box-sizing:content-box}.bullet-bar .tp-bullet:hover,.bullet-bar .tp-bullet.selected{background:rgba(204,204,204,1)}.bullet-bar .tp-bullet-image{}.bullet-bar .tp-bullet-title{}
+
+	</style>
+{% endblock %}
 {% block body %}
 
+
+		<section id="content">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="heading-block center border-bottom-0 bottommargin-lg">
+						<h2>{{candidats | length}}+ Demendeurs inscrits</h2>
+					</div>
+
+					<div class="row gutter-40 col-mb-80">
+						<div class="sidebar col-lg-4">
+							<div class="toggle">
+								<div class="toggle-header">
+									<div class="toggle-icon">
+										<i class="toggle-closed icon-line-plus"></i>
+										<i class="toggle-open icon-line-minus"></i>
+									</div>
+									<div class="toggle-title">
+										Secteur activités
+									</div>
+								</div>
+								<div class="toggle-content" style="display: block;">
+
+										<ul class="demos-filter custom-filter" data-container="#portfolio">
+												{% for secteur in secteur_activites %}
+														<li class=""><a href="#" data-filter="*">{{secteur}}</a></li>
+												{% endfor %}
+										</ul><!-- .grid-filter end -->
+								</div>
+							</div>
+                        <div class="toggle">
+								<div class="toggle-header">
+									<div class="toggle-icon">
+										<i class="toggle-closed icon-line-plus"></i>
+										<i class="toggle-open icon-line-minus"></i>
+									</div>
+									<div class="toggle-title">
+										metiers
+									</div>
+								</div>
+								<div class="toggle-content" style="display: none;">
+										<ul class="demos-filter custom-filter" data-container="#portfolio">
+												{% for metier in metiers %}
+														<li class=""><a href="#" data-filter="*">{{metier}}</a></li>
+												{% endfor %}
+
+										</ul><!-- .grid-filter end -->
+								</div>
+							</div>
+                        <div class="toggle">
+								<div class="toggle-header">
+									<div class="toggle-icon">
+										<i class="toggle-closed icon-line-plus"></i>
+										<i class="toggle-open icon-line-minus"></i>
+									</div>
+									<div class="toggle-title">
+										Régions
+									</div>
+								</div>
+								<div class="toggle-content" style="display: none;">
+										<ul class="demos-filter custom-filter" data-container="#portfolio">
+												{% for region in regions %}
+														<li class=""><a href="#" data-filter="*">{{region}}</a></li>
+												{% endfor %}
+										</ul><!-- .grid-filter end -->
+								</div>
+							</div>
+							<!-- Demos Filter
+							============================================= -->
+
+
+						</div>
+
+						<div class="postcontent col-lg-8">
+							<!-- Portfolio Items
+							============================================= -->
+
+						<div class="row ">
+								{{ knp_pagination_render(candidatsP,) }}
+
+                   {% for candidat in candidatsP %}
+
+                          {% set url = path('candidat_show', {'slug' : candidat.slug} ) %}
+                          <div class="col-12 mt-lg-5 border border-left clearfix">
+                            <div class="heading-block">
+                              <h2 class="font-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CV Num : {{candidat.id}} </font></font></h2>
+                              <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </font><font style="vertical-align: inherit;">Praesentium reprehenderit inventore beatae velit quae labore sunt in possimus. </font><font style="vertical-align: inherit;">Mollitia, culpa?</font></font></span>
+                            </div>
+                            <table class="table">
+                              <tbody>
+                                <tr>
+                                  <td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Niveau d'étude:</font></font></strong></td>
+                                  <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                            {% if candidat.cv is null %}
+                                                                    ....
+                                                            {% else %}
+                                                                {{candidat.cv.niveauEtude}}
+                                                            {% endif %} </font></font>
+                                                        </td>
+                                </tr>
+                                <tr>
+                                  <td ><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Formations:</font></font></strong></td>
+                                  <td ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
+                                </tr>
+                                                    {% if candidat.cv is null %}
+                                                            ....
+                                                    {% else %}
+                                                    {% for formation in candidat.cv.formations %}
+                                    <tr>
+                                                                <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{formation.dateDebut | date("Y")}} - {{formation.dateFin | date("Y")}}</font></font></strong></td>
+                                                                <td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                                      <strong>{{formation.titre}}</strong><br>
+                                                                {% endfor %}
+                                                                </font></font>
+                                                            </td>
+                                    </tr>
+                                                    {% endif %}
+                                <tr>
+                                  <td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Niveau d'experience:</font></font></strong></td>
+                                  <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                            {% if candidat.cv is null %}
+                                                                    ....
+                                                            {% else %}
+                                                                {{candidat.cv.niveauExperience}}
+                                                            {% endif %} </font></font>
+                                                        </td>
+                                </tr>
+                                <tr>
+                                  <td ><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Experiences:</font></font></strong></td>
+                                  <td ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
+                                </tr>
+                                                    {% if candidat.cv is null %}
+                                                            ....
+                                                    {% else %}
+                                                    {% for experience in candidat.cv.experiences %}
+                                    <tr>
+                                                                <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{experience.dateDebut | date("Y")}} - {{experience.dateFin | date("Y")}}</font></font></strong></td>
+                                                                <td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                                      <strong>{{experience.poste}}</strong><br>
+                                                                {% endfor %}
+                                                                </font></font>
+                                                            </td>
+                                    </tr>
+                                                    {% endif %}
+                                <tr>
+                                  <td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Secteurs d'activité:</font></font></strong></td>
+                                  <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                            {% if candidat.critere is null %}
+                                                                    ....
+                                                            {% else %}
+                                                                {% for secteur in candidat.critere.secteurActivites %}
+                                                                    {{secteur}}
+                                                                {% endfor %}
+                                                            {% endif %} </font></font>
+                                                        </td>
+                                </tr>
+                                <tr>
+                                  <td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Métiers:</font></font></strong></td>
+                                  <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                            {% if candidat.critere is null %}
+                                                                    ....
+                                                            {% else %}
+                                                                {{candidat.critere.metier}}
+                                                            {% endif %} </font></font>
+                                                        </td>
+                                </tr>
+                                <tr>
+                                  <td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Langues:</font></font></strong></td>
+                                  <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                            {% if candidat.critere is null %}
+                                                                    ....
+                                                            {% else %}
+                                                            {% for langue in candidat.critere.langues %}
+                                                                    {{langue}}
+                                                                {% endfor %}
+                                                            {% endif %} </font></font>
+                                                        </td>
+                                </tr>
+                                <tr>
+                                  <td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nationalité:</font></font></strong></td>
+                                  <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.user.nationalite}}</font></font></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <a href="{{ url }}" class="button button-large button-border button-black button-dark ml-0"><i class="icon-line-cloud-download"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Voir le CV</font></font></a>
+                          </div>
+
+                        {% endfor %}
+
+								{{ knp_pagination_render(candidatsP,) }}
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
 {% endblock %}
+

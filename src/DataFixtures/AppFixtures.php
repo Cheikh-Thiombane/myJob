@@ -406,7 +406,7 @@ class AppFixtures extends Fixture
         $adminRole = new Role();
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
-        
+
         $adminUser = new User();
             $hash = $this->encoder->encodePassword($adminUser, 'password');
             $adminUser->setFirstName('Cheikh Ahmed')
@@ -419,6 +419,14 @@ class AppFixtures extends Fixture
                 ;
         $manager->persist($adminUser);
         $manager->flush();
+
+        $createDate = $faker->dateTimeBetween('-6 months');
+
+        $startDate = $faker->dateTimeBetween('-3 months');
+
+        $duration = mt_rand(3, 10);
+
+        $endDate = (clone $startDate)->modify("+duration days");
 
     }
 }

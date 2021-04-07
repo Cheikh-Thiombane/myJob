@@ -17,8 +17,7 @@
       <div class="form-row ml-5">
         <div class="col-4 form-group mt-3" >DATE DEBUT: {{ form_widget(form.dateDebut,{'attr' :{'class' : 'form-control datepicker valid'}} ) }} </div>
         <div class="col-4 form-group mt-3" >DATE FIN: {{ form_widget(form.dateFin,{'attr' :{'class' : 'form-control datepicker',
-                                                                                                        'data-date-start-date':'-2m',
-                                                                                                        'data-date-end-date':'0d'}} ) }} </div>
+                                                                                                        }} ) }} </div>
         <div class="col-4 ">
           <div class=" col-2 float-right">
             <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
@@ -61,8 +60,7 @@
       <div class="form-row ml-5">
         <div class="col-4 form-group mt-3" >DATE DEBUT: {{ form_widget(form.dateDebut,{'attr' :{'class' : 'form-control datepicker valid'}} ) }} </div>
         <div class="col-4 form-group mt-3" >DATE FIN: {{ form_widget(form.dateFin,{'attr' :{'class' : 'form-control datepicker',
-                                                                                                        'data-date-start-date':'-2m',
-                                                                                                        'data-date-end-date':'0d'}} ) }} </div>
+                                                                                                        }} ) }} </div>
         <div class="col-4  ">
         <div class="col-2 float-right">
             <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn  btn-danger">X</button>
@@ -271,3 +269,12 @@
   </tbody>
 </table>
  #}
+{% block javascripts %}
+  <script>
+  $('.')
+  $('.datepicker').datepicker({
+              format: 'dd/mm/yyyy',
+                          autoclose: true
+                      });
+  </script>
+{% endblock %}

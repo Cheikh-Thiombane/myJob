@@ -1,0 +1,433 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello AdminOffreController!{% endblock %}
+
+{% block body %}
+    <div class="main-content-wrap sidenav-open d-flex flex-column">
+        <div class="breadcrumb">
+          <h1>Datatables</h1>
+          <ul>
+              <li><a href="">UI Kits</a></li>
+              <li>Datatables</li>
+          </ul>
+        </div>
+        <div class="separator-breadcrumb border-top"></div>
+
+        <div class="row mb-4">
+          <div class="col-md-12">
+              <h4>Les critéres accecibles</h4>
+          </div>
+        </div>
+      <!-- end of row -->
+
+        <div class="row mb-4">
+
+            <div class="col-md-6 mb-4">
+                    <div class="card text-left">
+
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">Les secteurs d'activité</h4>
+                            {{ form_start(formSec) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formSec.libele, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">
+                                           ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formSec) }}
+                            <div class="table-responsive">
+                                <table id="zero_configuration_table" class="display table table-striped table-bordered table " style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Libelle</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for secteur in secteurs %}
+
+                                        <tr>
+                                            <td scope="row">{{secteur.id}}</td>
+                                            <td >{{secteur.libele}}</td>
+
+                                            <td>
+                                                <a href="{{ path('admin_secteur_edit', {'id' : secteur.id}) }}" class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                </a>
+                                                <a href="{{ path('admin_secteur_delete', {'id' : secteur.id}) }}" class="text-danger mr-2">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Libelle</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                    <div class="card text-left">
+
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">Les Métiers</h4>
+                            {{ form_start(formM) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formM.libele, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formM) }}
+                            <div class="table-responsive">
+                                <table id="zero_configuration_table" class="display table table-striped table-bordered table " style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Libelle</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for metier in metiers %}
+
+                                        <tr>
+                                            <td scope="row">{{metier.id}}</td>
+                                            <td >{{metier.libele}}</td>
+
+                                            <td>
+                                                <a href="" class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                </a>
+                                                <a href="{{ path('admin_metier_delete', {'id' : metier.id}) }}" class="text-danger mr-2">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Libelle</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 mb-4">
+                    <div class="card text-left">
+
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">Les régions et mobilités</h4>
+                            {{ form_start(formR) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formR.libele, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formR) }}
+                            <div class="table-responsive">
+                                <table id="zero_configuration_table" class="display table table-striped table-bordered table " style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Libelle</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for region in regions %}
+
+                                        <tr>
+                                            <td scope="row">{{region.id}}</td>
+                                            <td >{{region.libele}}</td>
+
+                                            <td>
+                                                <a href="" class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                </a>
+                                                <a href="{{ path('admin_region_delete', {'id' : region.id}) }}" class="text-danger mr-2">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Libelle</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card text-left">
+
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Les Langues</h4>
+                        {{ form_start(formL) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formL.libele, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formL) }}
+                        <div class="table-responsive">
+                            <table id="zero_configuration_table" class="display table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for langue in langues %}
+
+                                    <tr>
+                                        <td scope="row">{{langue.id}}</td>
+                                        <td >{{langue.libele}}</td>
+
+                                        <td>
+                                            <a href="" class="text-success mr-2">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                            </a>
+                                            <a href="{{ path('admin_langue_delete', {'id' : langue.id}) }}" class="text-danger mr-2">
+                                                <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card text-left">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Les types de contrat</h4>
+                        {{ form_start(formC) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formC.libelle, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formC) }}
+                        <div class="table-responsive">
+                            <table id="zero_configuration_table" class="display table table-striped table-bordered " style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for typeContrat in typeContrats %}
+
+                                    <tr>
+                                        <td scope="row">{{typeContrat.id}}</td>
+                                        <td >{{typeContrat.libelle}}</td>
+
+                                        <td>
+                                            <a href="" class="text-success mr-2">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                            </a>
+                                            <a href="{{ path('admin_contrat_delete', {'id' : typeContrat.id}) }}" class="text-danger mr-2">
+                                                <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card text-left">
+
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Les Niveaux d'études</h4>
+                        {{ form_start(formE) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formE.libele, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formE) }}
+                        <div class="table-responsive">
+                            <table id="zero_configuration_table" class="display table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for etude in etudes %}
+
+                                    <tr>
+                                        <td scope="row">{{etude.id}}</td>
+                                        <td >{{etude.libele}}</td>
+
+                                        <td>
+                                            <a href="" class="text-success mr-2">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                            </a>
+                                            <a href="{{ path('admin_etude_delete', {'id' : etude.id}) }}" class="text-danger mr-2">
+                                                <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card text-left">
+
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Les Niveaux d'experience</h4>
+                        {{ form_start(formEx) }}
+                                <div class="row">
+                                    <div class="col-md-8 form-group mb-3">
+                                        {{ form_widget(formEx.libelle, {'attr' :{'class' : 'form-control form-control-rounded',}}) }}
+                                                            </div>
+                                    <div class="col-md-4 form-group mb-3">
+                                        <button class="btn btn-primary" type="submit" id="secteur">ajouter</button>
+                                    </div>
+                                </div>
+                            {{ form_end(formEx) }}
+                        <div class="table-responsive">
+                            <table id="zero_configuration_table" class="display table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for experience in experiences %}
+
+                                    <tr>
+                                        <td scope="row">{{experience.id}}</td>
+                                        <td >{{experience.libelle}}</td>
+
+                                        <td>
+                                            <a href="" class="text-success mr-2">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                            </a>
+                                            <a href="{{ path('admin_experience_delete', {'id' : experience.id}) }}" class="text-danger mr-2">
+                                                <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Libelle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+    $(document).ready(function() {
+    $('table.display').DataTable();
+    } );
+    </script>
+{% endblock %}

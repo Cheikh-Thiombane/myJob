@@ -18,7 +18,7 @@
 						<div class="container py-5">
 
 							<div class="text-center">
-								<a href="index.html"><h2 class="text-center">Connexion</h2></a>
+								<a href=""><h2 class="text-center">Connexion</h2></a>
 							</div>
 
                 {% if hasError %}
@@ -40,7 +40,7 @@
 
 											<div class="col-12 form-group">
 												<label for="login-form-password">Mot de passe:</label>
-												<input type="password" id="login-form-password" name="_password" required  class="form-control not-dark" />
+												<input type="password" id="login-form-password" name="_password" required  class="form-control not-dark" value="{{username}}" />
 											</div>
 
 											<div class="col-12 form-group mb-0">

@@ -33,7 +33,7 @@ class Candidat
      */
     private $picture;
 
-    
+
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="candidat", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -61,15 +61,21 @@ class Candidat
     private $critere;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="date", length=255, nullable=true)
      */
     private $dateNaiss;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="candidat", orphanRemoval=true)
+     */
+    private $comments;
 
 
 
     public function __construct()
     {
         $this->offres = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -199,14 +205,44 @@ class Candidat
         return $this;
     }
 
-    public function getDateNaiss(): ?string
+    public function getDateNaiss(): ?\DateTimeInterface
     {
         return $this->dateNaiss;
     }
 
-    public function setDateNaiss(?string $dateNaiss): self
+    public function setDateNaiss(?\DateTimeInterface $dateNaiss): self
     {
         $this->dateNaiss = $dateNaiss;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getCandidat() === $this) {
+                $comment->setCandidat(null);
+            }
+        }
 
         return $this;
     }

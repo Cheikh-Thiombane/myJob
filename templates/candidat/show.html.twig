@@ -79,7 +79,7 @@
 										</tr>
 										<tr>
 											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Date de naissance:</font></font></strong></td>
-											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.dateNaiss | format_date}}</font></font></td>
+											<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{candidat.dateNaiss | date("m/d/Y")}}</font></font></td>
 										</tr>
 										<tr>
 											<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">E-mail:</font></font></strong></td>
@@ -129,7 +129,7 @@
 									<span>
 										{{formation.nomEcole}}<br>
 										{{formation.titre}}<br>
-										{{formation.dateDebut | format_date}} – {{formation.dateFin | format_date}}
+										{{formation.dateDebut | date("m/d/Y")}} – {{formation.dateFin | date("m/d/Y")}}
 									</span>
                 {% endfor %}
 
@@ -147,7 +147,7 @@
 									<span>
 										{{experience.entreprise}}<br>
 										{{experience.poste}}<br>
-										{{experience.dateDebut | format_date}} – {{experience.dateFin | format_date}}
+										{{experience.dateDebut | date("m/d/Y")}} – {{experience.dateFin | date("m/d/Y")}}
 									</span>
                 {% endfor %}
 								</div>

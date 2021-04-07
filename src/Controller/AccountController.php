@@ -110,11 +110,11 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
              foreach ($cv->getFormations() as $formation) {
-                //$formation->setCv($cv);
+                $formation->setCv($cv);
                 $manager->persist($formation);
             }
             foreach ($cv->getExperiences() as $experience) {
-                //$experience->setCv($cv);
+                $experience->setCv($cv);
                 $manager->persist($experience);
             }
 
@@ -290,14 +290,14 @@ class AccountController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            /* foreach ($cv->getFormations() as $formation) {
+             foreach ($cv->getFormations() as $formation) {
                 $formation->setCv($cv);
                 $manager->persist($formation);
             }
             foreach ($cv->getExperiences() as $experience) {
                 $experience->setCv($cv);
                 $manager->persist($experience);
-            } */
+            }
 
             $manager->persist($cv);
             $manager->flush();
@@ -308,7 +308,6 @@ class AccountController extends AbstractController
 
             //return $this->redirectToRoute('account_login');
         }
-
 
         //$offres = $repoO->findAll();
         //$user = $entreprise->getUser();

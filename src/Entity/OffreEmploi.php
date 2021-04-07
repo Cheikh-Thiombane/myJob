@@ -108,12 +108,28 @@ class OffreEmploi
      */
     private $renumeration;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="offre", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $endDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $startDate;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->candidats = new ArrayCollection();
         $this->langues = new ArrayCollection();
         $this->secteurActivites = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -378,6 +394,60 @@ class OffreEmploi
     public function setRenumeration(?int $renumeration): self
     {
         $this->renumeration = $renumeration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setOffre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getOffre() === $this) {
+                $comment->setOffre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): self
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?string
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?string $startDate): self
+    {
+        $this->startDate = $startDate;
 
         return $this;
     }

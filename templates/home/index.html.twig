@@ -286,7 +286,7 @@
 
                         {% for candidat in candidats | slice(26, 34) %}
 
-                        {% set url = path('candidat_show', {'slug' : candidat.slug} ) %}
+                            {% set url = path('candidat_show', {'slug' : candidat.slug} ) %}
 							<div class="col-md-5 mt-lg-5 border border-left  ml-5  clearfix">
 								<div class="heading-block">
 									<h2 class="font-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CV Num : {{candidat.id}} </font></font></h2>
@@ -313,7 +313,7 @@
                                         {% else %}
                                         {% for formation in candidat.cv.formations %}
 										    <tr>
-                                                    <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{formation.dateDebut | slice(0, 4)}} - {{formation.dateFin | slice(0, 4)}}</font></font></strong></td>
+                                                    <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{formation.dateDebut | date("Y")}} - {{formation.dateFin | date("Y")}}</font></font></strong></td>
                                                     <td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                                                           <strong>{{formation.titre}}</strong><br>
                                                     {% endfor %}
@@ -340,7 +340,7 @@
                                         {% else %}
                                         {% for experience in candidat.cv.experiences %}
 										    <tr>
-                                                    <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{experience.dateDebut | slice(0, 4)}} - {{experience.dateFin | slice(0, 4)}}</font></font></strong></td>
+                                                    <td class="border-top-0"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{experience.dateDebut | date("Y")}} - {{experience.dateFin | date("Y")}}</font></font></strong></td>
                                                     <td class="border-top-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                                                           <strong>{{experience.poste}}</strong><br>
                                                     {% endfor %}

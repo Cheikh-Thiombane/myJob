@@ -121,7 +121,8 @@
 							<!-- Portfolio Items
 							============================================= -->
 							<div id="portfolio" class="portfolio row grid-container gutter-20 has-init-isotope" data-layout="fitRows" data-stagger="20" style="position: relative; height: auto;">
-									{% for offre in offre_emplois  %}
+								{{ knp_pagination_render(offre_emploisP,) }}
+									{% for offre in offre_emploisP  %}
                                         {% set url = path('emploi_show', {'slug' : offre.slug} ) %}
                                         {% set url_e = path('entreprise_show', {'slug' : offre.entreprise.slug} ) %}
                                         <div class="col-md-12">
@@ -134,7 +135,7 @@
                                                             </div>
                                                             <div class="testi-content">
                                                                 <div class="testi-meta">
-                                                                    <a href="{{url}}">{{offre.poste}}</a>
+                                                                    <a href="{{url}}">{{offre.poste}}</a><span classs="float-right">Date limite: {{offre.endDate|date("m/d/Y")}}</span>
                                                                     <a href="{{url_e}}"><span>{{offre.entreprise.nom}}</span></a>
                                                                 </div>
                                                                 {{offre.descriptionPoste}}
@@ -144,11 +145,10 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     {% endfor %}
 
-							</div><!-- #portfolio end -->
+												{{ knp_pagination_render(offre_emploisP,) }}
+											</div><!-- #portfolio end -->
 						</div>
 					</div>
 				</div>

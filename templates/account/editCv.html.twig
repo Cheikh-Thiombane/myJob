@@ -142,6 +142,7 @@
 				elementUrgent = $("input[name='website-cost-before-30-days']"),
 				elementSEO = $(".website-seo");
         $('.datepicker').datepicker({
+												format: 'dd/mm/yyyy',
                         autoclose: true
                     });
 
@@ -245,8 +246,11 @@
 
 		});
 
-
 	$('#cv-formation').click(function(){
+			$('.datepicker').datepicker({
+              format: 'dd/mm/yyyy',
+                          autoclose: true
+                      });
       // je recupère le numéro des futures champs que je vais creer
       const index = +$('#widgets-counter').val();
 
@@ -269,6 +273,10 @@
     }
 
 	$('#cv-experience').click(function(){
+		$('.datepicker').datepicker({
+              format: 'dd/mm/yyyy',
+                          autoclose: true
+                      });
       // je recupère le numéro des futures champs que je vais creer
       const index = +$('#widgets-counter_1').val();
 
@@ -297,7 +305,10 @@
       });
     }
 
-
+		$('.datepicker').datepicker({
+              format: 'dd/mm/yyyy',
+                          autoclose: true
+                      });
     updateCounterFormation();
     updateCounterExperience();
 
